@@ -13,13 +13,16 @@ const inventorySchema = new mongoose.Schema({
   itemQuantity: {
     type: Number,
     required: true,
-    min: 0,
+    default: 0,
   },
-  assignedTo: {
+  // Reference to User model
+  user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // Reference the User model
-    default: null, // Initially assigned to admin
+    ref: 'User',
   },
+
 });
 
-module.exports = mongoose.model('Inventory', inventorySchema);
+const Inventory = mongoose.model('Inventory', inventorySchema);
+
+module.exports = Inventory;
