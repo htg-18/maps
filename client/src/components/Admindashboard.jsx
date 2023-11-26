@@ -36,7 +36,7 @@ const Admindashboard = () => {
     <div className=' flex flex-col items-center m-6'>
           <InventoryList/>
         </div>
-        <Footer/>
+        {/* <Footer/> */}
  </div>
   )
 }

@@ -90,7 +90,7 @@ const Adminrequest = () => {
 
   return (
     <div className=' '>
-      <Navbar/>
+      {/* <Navbar/> */}
       <div className="h-screen  bg-zinc-300 flex flex-col  w-[100%]">
         <h1 className='text-center text-[40px] font-bold text-teal-800 m-1'>Send request to management</h1>
 
