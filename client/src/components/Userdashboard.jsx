@@ -20,15 +20,15 @@ const Admindashboard = () => {
     <div className="flex">
 
        <button className="bg-teal-700 hover:bg-teal-900 text-white font-bold py-2 px-4 m-4 rounded"
-           onClick={() => navigate('/adminrequest')}>
+           onClick={() => navigate('/myinventory')}>
              My Inventory
          </button>
          <button className="flex items-center bg-teal-700 hover:bg-teal-900 text-white font-bold py-2 px-4 m-4 rounded"
-           onClick={() => navigate('/createNewUser')}>
+           onClick={() => navigate('/requestitem')}>
            <FaPlus style={{paddingRight:'4px'}}/>Request Item
          </button>
          <button className="flex items-center bg-teal-700 hover:bg-teal-900 text-white font-bold py-2 px-4 m-4 rounded"
-         onClick={() => navigate('/userrequests')}>
+         onClick={() => navigate('/myrequests')}>
            My Requests
          </button>
     </div>

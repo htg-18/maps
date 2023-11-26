@@ -23,6 +23,7 @@ app.use(bodyParser.json()); // Make sure this line is present
 //  post - '/adminlogin' - login by admin
 //  post - '/userlogin'  - login by user
 //  post -  '/createnewuser' - new user created by admin
+//  get -   '/getallusers'  - get all users 
 app.use('/',authpath);
 
 

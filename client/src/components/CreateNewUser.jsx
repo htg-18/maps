@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {FaUser} from 'react-icons/fa';
-import {RiLockPasswordFill} from 'react-icons/ri'
+import { FaUser } from 'react-icons/fa';
+import { RiLockPasswordFill } from 'react-icons/ri';
 
 const CreateNewUser = () => {
   const navigate = useNavigate();
@@ -11,12 +11,28 @@ const CreateNewUser = () => {
     username: '',
     password: '',
     email: '',
+    phoneNo: '',
   });
+
   const [error, setError] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUserData({ ...userData, [name]: value });
+    let trimmedValue = value.trim(); // Trim whitespace from both ends
+  
+    // Check if the value is a valid phone number
+    const regex = /^\d{10}$/;
+    const isValidPhoneNo = regex.test(trimmedValue);
+  
+    // Update the user data with the trimmed value
+    setUserData({ ...userData, [name]: trimmedValue });
+  
+    // Set the error message if the phone number is invalid
+    if (name === 'phoneNo' && !isValidPhoneNo) {
+      setError('Phone number must be 10 digit Number!');
+    } else if (name === 'phoneNo' && isValidPhoneNo) {
+      setError('');
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -37,49 +53,50 @@ const CreateNewUser = () => {
         console.log('User created successfully!');
         const username = userData.username;
         toast.success(`Successfully added ${username}!`, {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: false,
           pauseOnHover: false,
           draggable: false,
           progress: undefined,
-          theme: "light",
+          theme: 'light',
         });
-         
-          // Clear form fields
-      setUserData({
-        username: '',
-        password: '',
-        email: '',
-      });
+
+        // Clear form fields
+        setUserData({
+          username: '',
+          password: '',
+          email: '',
+          phoneNo: '',
+        });
 
         // Redirect to a success page or reset the form
         // navigate('/success');
       } else {
         setError(data.error || 'Error creating user');
         toast.error(error, {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "light",
+          theme: 'light',
         });
       }
     } catch (error) {
       setError('Error creating user');
       toast.error(error, {
-        position: "top-right",
+        position: 'top-right',
         autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: 'light',
       });
       console.error('Error creating user:', error.message);
     }
@@ -93,7 +110,7 @@ const CreateNewUser = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="username" className="flex items-center  text-gray-700 text-sm font-bold mb-2">
-              <FaUser className='mr-2'/>
+              <FaUser className='mr-2' />
               Username:
             </label>
             <input
@@ -125,8 +142,26 @@ const CreateNewUser = () => {
           </div>
 
           <div className="mb-4">
+            <label htmlFor="phoneNo" className="flex items-center  text-gray-700 text-sm font-bold mb-2">
+              Phone Number:
+            </label>
+            <input
+              type="tel"
+              id="phoneNo"
+              name="phoneNo"
+              value={userData.phoneNo}
+              onChange={handleInputChange}
+
+
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
+              placeholder="Enter your phone number"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
             <label htmlFor="password" className="flex items-center text-gray-700 text-sm font-bold mb-2">
-            <RiLockPasswordFill className='mr-2'/>
+              <RiLockPasswordFill className='mr-2' />
               Password:
             </label>
             <input
@@ -158,7 +193,7 @@ const CreateNewUser = () => {
               className="mt-4 w-[35%] bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
               onClick={() => {
                 // Navigate back or perform some other action
-                navigate('/admindashboard');
+                navigate('/admin/users');
               }}
             >
               Back

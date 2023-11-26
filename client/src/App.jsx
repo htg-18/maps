@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import CreateNewUser from "./components/CreateNewUser"
 import UserRequests from "./components/UserRequests"
 import Navbar from "./components/Navbar"
+import Users from "./components/Users"
 function App() {
   
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/adminrequest" element={<Adminrequest/>}/>
           <Route path="/createNewUser" element={<CreateNewUser/>}/>
           <Route path="/userrequests" element={<UserRequests/>}/>
+          <Route path="/admin/users" element={<Users/>}/>
         </Routes>
       </Router>
 

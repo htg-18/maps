@@ -135,7 +135,7 @@ const InventoryList = () => {
         />
       </div>
 
-      <div className="p-20 w-screen min-h-screen container mx-auto mt-8 ">
+      <div className="px-20 w-screen min-h-screen container mx-auto mt-8 ">
         <h1 className="text-2xl font-bold mb-4">Inventory List</h1>
         {showNoItems ? (
           // Display the GIF when there are no filtered items

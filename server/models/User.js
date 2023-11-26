@@ -16,6 +16,9 @@ const UserSchema = mongoose.Schema({
         type:String,
         required:true
     },
+    phoneNo: {
+        type: String,
+     },
 })
 
 const User = mongoose.model('user',UserSchema);

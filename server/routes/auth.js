@@ -83,58 +83,74 @@ router.post("/userlogin", async (req, res) => {
 );
 
 
-
-// ROUTE :   Create a User using: POST '/createnewuser'.
 router.post("/createnewuser",
-    [
-        body("username", "Enter a valid name").isLength({ min: 3 }),
-        body("email", "Enter a valid Email").isEmail(),
-        body("password", "Password must be at least 5 characters").isLength({
-            min: 5,
-        }),
-    ],
-    async (req, res) => {
-        let success = false;
-        // if there are errors, return bad requests and errors
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ success, errors: errors.array() });
-        }
+  [
+    body("username", "Enter a valid name").isLength({ min: 3 }),
+    body("email", "Enter a valid Email").isEmail(),
+    body("password", "Password must be at least 5 characters").isLength({ min: 5 }),
+    body("phoneNo", "Phone number must be 10 digits").isLength({ min: 10, max: 10 }),
+  ],
+  async (req, res) => {
+    let success = false;
 
-        try {
-            // Destructure the required fields from req.body
-            const { username, email, password } = req.body;
-
-            // Check if user already exists
-            const existingUser = await User.findOne({ username });
-            if (existingUser) {
-                return res.status(400).json({ error: 'Username already exists' });
-            }
-
-            const existingEmail = await User.findOne({ email });
-            if (existingEmail) {
-                return res.status(400).json({ error: 'Email already exists' });
-            }
-
-            const salt = await bcrypt.genSalt(10);
-            const secPass = await bcrypt.hash(password, salt); // generating a secure password
-
-            // creating a new user
-            const user = await User.create({
-                username,
-                password: secPass,
-                email,
-            });
-
-            await user.save();
-
-            res.status(200).json({ success: true, message: 'User created successfully' });
-        } catch (error) {
-            console.error('Error creating user:', error);
-            res.status(500).json({ error: 'Internal Server Error' });
-        }
+    // Check for validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ success, errors: errors.array() });
     }
+
+    try {
+      // Destructure the required fields from req.body
+      const { username, email, password, phoneNo } = req.body;
+
+      // Check if user already exists
+      const existingUser = await User.findOne({ username });
+      if (existingUser) {
+        return res.status(400).json({ error: 'Username already exists' });
+      }
+
+      const existingEmail = await User.findOne({ email });
+      if (existingEmail) {
+        return res.status(400).json({ error: 'Email already exists' });
+      }
+
+      // Generate a secure password hash
+      const salt = await bcrypt.genSalt(10);
+      const secPass = await bcrypt.hash(password, salt);
+
+      // Create a new user
+      const user = new User({
+        username,
+        password: secPass,
+        email,
+        phoneNo,
+      });
+
+      await user.save();
+
+      success = true;
+      res.status(200).json({ success, message: 'User created successfully' });
+    } catch (error) {
+      console.error('Error creating user:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
 );
+
+
+
+
+
+// Get all users
+router.get('/getallusers', async (req, res) => {
+    try {
+      const users = await User.find();
+      res.json({ success: true, data: users });
+    } catch (error) {
+      console.error('Error getting users:', error.message);
+      res.status(500).json({ success: false, error: error.message });
+    }
+  });
 
 
 module.exports = router;

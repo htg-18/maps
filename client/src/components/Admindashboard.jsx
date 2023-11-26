@@ -6,7 +6,7 @@ import Footer from './Footer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaPlus } from "react-icons/fa";
-
+import { FaUsers } from "react-icons/fa";
 
 const Admindashboard = () => {
   const navigate = useNavigate();
@@ -24,8 +24,8 @@ const Admindashboard = () => {
              Send request to management
          </button>
          <button className="flex items-center bg-teal-700 hover:bg-teal-900 text-white font-bold py-2 px-4 m-4 rounded"
-           onClick={() => navigate('/createNewUser')}>
-           <FaPlus style={{paddingRight:'4px'}}/>Create New User
+           onClick={() => navigate('/admin/users')}>
+           <FaUsers className='mx-2'/>Users
          </button>
          <button className="flex items-center bg-teal-700 hover:bg-teal-900 text-white font-bold py-2 px-4 m-4 rounded"
          onClick={() => navigate('/userrequests')}>
