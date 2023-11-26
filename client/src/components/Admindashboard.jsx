@@ -7,16 +7,17 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaPlus } from "react-icons/fa";
 
+
 const Admindashboard = () => {
   const navigate = useNavigate();
   useEffect(() => {
     // Clear the form data and toast message when the component is unmounted
-   
       toast.dismiss(); // Clear all toasts
   }, []); // Emp
   return (
     <div className='bg-zinc-300 min-h-screen flex flex-col items-center'>
-    <Navbar/>
+      <h1 className='font-bold text-teal-900 text-[40px] m-6'>ADMIN DASHBOARD</h1>
+   
     <div className="flex">
        <button className="bg-teal-700 hover:bg-teal-900 text-white font-bold py-2 px-4 m-4 rounded"
            onClick={() => navigate('/adminrequest')}>
@@ -26,14 +27,13 @@ const Admindashboard = () => {
            onClick={() => navigate('/createNewUser')}>
            <FaPlus style={{paddingRight:'4px'}}/>Create New User
          </button>
-         <button className="flex items-center bg-teal-700 hover:bg-teal-900 text-white font-bold py-2 px-4 m-4 rounded">
+         <button className="flex items-center bg-teal-700 hover:bg-teal-900 text-white font-bold py-2 px-4 m-4 rounded"
+         onClick={() => navigate('/userrequests')}>
            User Requests
          </button>
     </div>
      
-    
-
-       <div className=' flex flex-col items-center m-6'>
+    <div className=' flex flex-col items-center m-6'>
           <InventoryList/>
         </div>
         <Footer/>
