@@ -1,11 +1,11 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom';
-import Navbar from './Navbar';
-import Footer from './Footer';
-import lnmiit from "../assets/lnmiit.jfif"
+      import React from 'react'
+      import { useNavigate } from 'react-router-dom';
+      import Navbar from './Navbar';
+      import Footer from './Footer';
+      import lnmiit from "../assets/lnmiit.jfif"
 
-const Home = () => {
-  const navigate = useNavigate();
+      const Home = () => {
+        const navigate = useNavigate();
 
   return (
     <div className='bg-zinc-300 '>
@@ -39,8 +39,9 @@ const Home = () => {
       <Footer/>
       
 
-    </div>
-  )
-}
 
-export default Home
+          </div>
+        )
+      }
+
+      export default Home
