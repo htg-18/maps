@@ -112,7 +112,7 @@ const SearchBar = ({setResult,inventory}) => {
   return (
     <>
     <div className='bg-white flex items-center h-10 w-full max-w-md rounded-[12px] p-2'>
-    <FaSearch style={{ color: '#FFC436' }} />
+    <FaSearch style={{ color: 'teal' }} />
     <input 
     className='pl-2 outline-none border-none' 
     placeholder='Type to Search...'
