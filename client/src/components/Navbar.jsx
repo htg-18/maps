@@ -26,7 +26,7 @@ const Navbar = () => {
         };
       }, []);
   return (
-    <nav  className='w-screen min-h-[60px] flex justify-between items-center bg-[#FFC436] sticky top-0'>
+    <nav  className='w-screen min-h-[70px] flex justify-between items-center bg-teal-900 sticky top-0'>
 
 <Link to="/admindashboard" className='text-white text-3xl font-extrabold'>
         <img src={logo} alt='LOGO' className='h-14 w-60'/>

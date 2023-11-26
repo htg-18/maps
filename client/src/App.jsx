@@ -5,10 +5,14 @@ import Userlogin from "./components/Userlogin"
 import Admindashboard from "./components/Admindashboard"
 import Userdashboard from "./components/Userdashboard"
 import Adminrequest from "./components/Adminrequest"
+import Toaster from "react-hot-toast"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function App() {
   
   return (
     <>
+    {/* <div><Toaster/></div> */}
       <Router>
         <Routes>
           <Route path="/" element={<Home/>}/>
@@ -19,8 +23,8 @@ function App() {
           <Route path="/adminrequest" element={<Adminrequest/>}/>
         </Routes>
       </Router>
-      
-
+      {/* toast("Hello World") */}
+       <ToastContainer/>
     </>
   )
 }
