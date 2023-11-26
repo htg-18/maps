@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import SearchDiv from './SearchDiv';
 import SearchBar from './SearchBar';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const InventoryList = () => {
   const [inventory, setInventory] = useState([]);
@@ -35,7 +37,7 @@ const InventoryList = () => {
     <>
       <div>
           <div className='mx-auto my-auto flex-col items-center'>
-              <SearchBar setResult={setResult} inventory/>
+              <SearchBar setResult={setResult} inventory={inventory}/>
               < SearchDiv result={result}/>
           </div>
         </div>

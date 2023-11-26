@@ -7,12 +7,12 @@ import wave from "../assets/wave.png"
 const Footer = () => {
   return (
     <footer className='relative flex flex-col p-4 sticky bottom-0 min-h-80  w-screen bg-teal-900 pb-2 pt-3'>
-      <div className='waves'>
+      {/* <div className='waves'>
         <div className='wave' id="wave1"></div>
         <div className='wave' id="wave2"></div>
         <div className='wave' id="wave3"></div>
         <div className='wave' id="wave4"></div>
-    </div>
+    </div> */}
     <div className='flex justify-between '>
   
      <div className='flex items-center'>
