@@ -9,7 +9,6 @@ const Home = () => {
 
   return (
     <div className='bg-zinc-300 '>
-    <Navbar/>
     <div className='flex'>
     <figure className="bg-slate-100 rounded-xl p-8 dark:bg-white w-[50%]">
   <img className="w-50 h-25 rounded-[12px] mx-auto" src={lnmiit} alt="" width="384" height="512" />
