@@ -7,7 +7,7 @@ import { RiLockPasswordFill } from 'react-icons/ri';
 import { MdEmail } from "react-icons/md";
 import { FaPhone } from "react-icons/fa";
 
-const CreateNewUser = () => {
+const EditUser = ({setModalVisible}) => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({
     username: '',
@@ -39,7 +39,7 @@ const CreateNewUser = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setModalVisible(false)
     try {
       const response = await fetch('http://localhost:5000/createnewuser', {
         method: 'POST',
@@ -54,6 +54,7 @@ const CreateNewUser = () => {
       if (data.success) {
         console.log('User created successfully!');
         const username = userData.username;
+        setModalVisible(false)
         toast.success(`Successfully added ${username}!`, {
           position: 'top-right',
           autoClose: 1000,
@@ -105,10 +106,10 @@ const CreateNewUser = () => {
   };
 
   return (
-    <div className="h-screen bg-zinc-300 font-bold flex flex-col justify-center ">
-      <h1 className="text-center text-[40px] text-teal-800 m-1" style={{fontFamily: 'Roboto, sans-serif'}}>Create New User</h1>
+    <div className="h-screen bg-white font-bold flex flex-col justify-center ">
+      <h1 className="text-center text-[40px] text-teal-800 m-1">Create New User</h1>
 
-      <div className="bg-white mx-auto w-full font-semibold max-w-md p-8 m-3" style={{fontFamily: 'Figtree, sans-serif'}}>
+      <div className="bg-white mx-auto w-full  font-semibold max-w-md p-8">
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="username" className="flex items-center  text-gray-700 text-sm font-bold mb-2">
@@ -163,22 +164,7 @@ const CreateNewUser = () => {
             />
           </div>
 
-          <div className="mb-4">
-            <label htmlFor="password" className="flex items-center text-gray-700 text-sm font-bold mb-2">
-              <RiLockPasswordFill className='mr-2' />
-              Password:
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={userData.password}
-              onChange={handleInputChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
-              placeholder="Enter your password"
-              required
-            />
-          </div>
+          
 
           {/* {error && (
             <div className="mb-4 text-red-500 text-sm font-bold">{error}</div>
@@ -187,21 +173,12 @@ const CreateNewUser = () => {
           <div className="text-center flex justify-around">
             <button
               type="submit"
-              className="mt-4 w-[35%] bg-teal-700 hover:bg-teal-900 text-white font-bold py-2 px-4 rounded"
+              className="mt-4 w-[70%] bg-teal-700 hover:bg-teal-900 text-white font-bold py-2 px-4 rounded"
             >
-              Create User
+              Edit User
             </button>
 
-            <button
-              type="button"
-              className="mt-4 w-[35%] bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-              onClick={() => {
-                // Navigate back or perform some other action
-                navigate('/admin/users');
-              }}
-            >
-              Back
-            </button>
+           
           </div>
         </form>
       </div>
@@ -209,4 +186,4 @@ const CreateNewUser = () => {
   );
 };
 
-export default CreateNewUser;
+export default EditUser;

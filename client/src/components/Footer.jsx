@@ -6,7 +6,9 @@ import { FaWhatsapp } from "react-icons/fa";
 import wave from "../assets/wave.png"
 const Footer = () => {
   return (
-    <footer className='relative flex flex-col p-4 bottom-0 min-h-80  w-screen bg-teal-900 pb-2 pt-3'>
+    <footer className='relative flex flex-col p-4 bottom-0 min-h-80  w-screen bg-teal-900 pb-2 pt-3'
+     style={{fontFamily: 'Roboto, sans-serif'}}
+    >
       {/* <div className='waves'>
         <div className='wave' id="wave1"></div>
         <div className='wave' id="wave2"></div>
