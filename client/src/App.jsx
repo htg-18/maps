@@ -12,6 +12,7 @@ import CreateNewUser from "./components/CreateNewUser"
 import UserRequests from "./components/UserRequests"
 import Navbar from "./components/Navbar"
 import Users from "./components/Users"
+import Footer from "./components/Footer"
 function App() {
   
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/userrequests" element={<UserRequests/>}/>
           <Route path="/admin/users" element={<Users/>}/>
         </Routes>
+        <Footer/>
       </Router>
 
 

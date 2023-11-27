@@ -1,19 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { FaSearch } from 'react-icons/fa';
+import { FaBullseye, FaSearch } from 'react-icons/fa';
 import notFound from '../assets/not-found-404error.gif';
+import { MdEdit } from "react-icons/md";
+import Modal from './Modal';
 
 const UsersAll = () => {
   const [users, setUsers] = useState([]);
   const [result, setResult] = useState([]);
   const [input, setInput] = useState('');
   const [showNoItems, setShowNoItems] = useState(false);
+  const [modalVisible,setModalVisible]=useState(false)
 
   useEffect(() => {
     // Fetch user data when the component mounts
     fetchUsers();
   }, []);
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (modalVisible && e.target.classList.contains('modal-wrapper')) {
+        setModalVisible(false);
+      }
+    };
+
+    if (modalVisible) {
+      document.addEventListener('click', handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, [modalVisible]);
 
   const fetchUsers = async () => {
     try {
@@ -39,9 +57,7 @@ const UsersAll = () => {
   useEffect(() => {
     // Check if there are no filtered items
     const filteredUsers = users.filter((user) =>
-      user.username.toLowerCase().includes(input.toLowerCase()) ||
-      user.email.toLowerCase().includes(input.toLowerCase()) ||
-      user.phoneNo.toLowerCase().includes(input.toLowerCase())
+      user.username.toLowerCase().includes(input.toLowerCase())
     );
 
     // Set the flag to true if there are no filtered items
@@ -68,14 +84,22 @@ const UsersAll = () => {
         ) : (
           <div className="grid grid-cols-3 gap-4">
             {users
-              .filter((user) =>
-                user.username.toLowerCase().includes(input.toLowerCase()) ||
-                user.email.toLowerCase().includes(input.toLowerCase())  ||
-                user.phoneNo.toLowerCase().includes(input.toLowerCase())
+              .filter((user1) =>
+                user1.username.toLowerCase().includes(input.toLowerCase()) 
               )
               .map((user) => (
-                <div key={user._id} className="bg-white p-4 shadow-md rounded-md">
-                  <h2 className="text-lg font-semibold mb-2">{user.username}</h2>
+                <div key={user._id} className="flex flex-col bg-white p-4 shadow-md rounded-md">
+                <div className='flex items-center justify-between'>
+                <h2 className="text-lg font-semibold mb-2">{user.username}</h2>
+                  <MdEdit className='hover:text-teal-800 text-2xl' style={{fontSize:'2xl',cursor:'pointer'}}
+
+                    onClick={()=>{
+                      setModalVisible(true);
+                      console.log(modalVisible)
+                    }}
+                  />
+                 
+                  </div>
                   <p className="text-gray-600 mb-2">Email: {user.email}</p>
                   <p className="text-gray-600">Phone No: {user.phoneNo}</p>
                 </div>
@@ -83,6 +107,9 @@ const UsersAll = () => {
           </div>
         )}
       </div>
+     
+      {modalVisible && <Modal setModalVisible={setModalVisible}/>}
+    
     </div>
   );
 };

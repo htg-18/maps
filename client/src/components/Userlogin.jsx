@@ -82,7 +82,7 @@ const UserLogin = () => {
           </div>
         </div>
       ) : (
-        {/* <Navbar /> */}
+        <Navbar />
       )}
       <div className="flex items-center justify-center flex-1 flex-col h-screen bg-zinc-300">
         <h1 className="text-3xl font-bold p-10 text-teal-900" style={{ cursor: 'pointer' }}>
