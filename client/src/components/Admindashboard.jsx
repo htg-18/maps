@@ -16,9 +16,9 @@ const Admindashboard = () => {
   }, []); // Emp
   return (
     <div className='bg-zinc-300 min-h-screen flex flex-col items-center'>
-      <h1 className='font-bold text-teal-900 text-[40px] m-6'>ADMIN DASHBOARD</h1>
+      <h1 className='font-bold text-teal-900 text-[40px] m-6' style={{fontFamily: 'Roboto, sans-serif'}}>ADMIN DASHBOARD</h1>
    
-    <div className="flex">
+    <div className="flex" style={{fontFamily: 'Figtree, sans-serif'}}>
        <button className="bg-teal-700 hover:bg-teal-900 text-white font-bold py-2 px-4 m-4 rounded"
            onClick={() => navigate('/adminrequest')}>
              Send request to management
@@ -33,7 +33,7 @@ const Admindashboard = () => {
          </button>
     </div>
      
-    <div className=' flex flex-col items-center m-6'>
+    <div className=' flex flex-col items-center m-6' style={{fontFamily: 'Figtree, sans-serif'}}>
           <InventoryList/>
         </div>
         {/* <Footer/> */}

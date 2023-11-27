@@ -26,7 +26,9 @@ const Navbar = () => {
         };
       }, []);
   return (
-    <nav  className='w-screen min-w-screen min-h-[70px] flex justify-between items-center bg-teal-900 sticky top-0'>
+    <nav  className='w-screen min-w-screen min-h-[70px] flex justify-between items-center bg-teal-900 sticky top-0'
+     style={{fontFamily: 'Roboto, sans-serif'}}
+    >
 
 <Link to="/admindashboard" className='text-white text-3xl font-extrabold'>
         <img src={logo} alt='LOGO' className='h-14 w-60'/>

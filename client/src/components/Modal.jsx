@@ -91,7 +91,7 @@ import EditUser from './EditUser';
 
 const Modal = ({ setModalVisible }) => {
   return (
-    <div className="modal-wrapper" onClick=''>
+    <div className="modal-wrapper" onClick='' style={{fontFamily: 'Figtree, sans-serif'}}>
       <div className="modal-content">
         {/* Your modal content goes here */}
         <EditUser setModalVisible={setModalVisible}/>

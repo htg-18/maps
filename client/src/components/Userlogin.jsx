@@ -76,7 +76,7 @@ const UserLogin = () => {
         <div className="flex-1 bg-teal-900 h-screen flex items-center justify-center" style={{ transform: 'skewX(-10deg)', transformOrigin: 'top' }}>
           <div className="flex flex-col items-center justify-center" style={{ cursor: 'pointer' }}>
             <img src={logo} className="w-4/2 sm:w-4/3 md:w-4/4 lg:w-4/5 mb-16" alt="Logo" />
-            <h1 className="text-3xl" style={{ color: 'white' }}>
+            <h1 className="text-3xl" style={{ color: 'white',fontFamily: 'Poppins, sans-serif' }}>
               Inventory Management
             </h1>
           </div>
@@ -84,14 +84,14 @@ const UserLogin = () => {
       ) : (
         <Navbar />
       )}
-      <div className="flex items-center justify-center flex-1 flex-col h-screen bg-zinc-300">
+      <div className="flex items-center justify-center flex-1 flex-col h-screen bg-zinc-300" style={{fontFamily: 'Figtree, sans-serif'}}>
         <h1 className="text-3xl font-bold p-10 text-teal-900" style={{ cursor: 'pointer' }}>
           User Login
         </h1>
         <form onSubmit={handleSubmit}  className={`${
             windowWidth < 1200 ? 'w-full' : 'w-[70%]'
           } h-[40%] bg-white shadow-md rounded-[10px] px-8 pt-6 pb-8 mb-4 flex flex-col justify-evenly`}>
-          <label className="flex items-center block text-gray-700 text-sm font-bold mb-2">
+          <label className="flex items-center block text-gray-700 text-m font-bold mb-2">
             <FaUser className="mr-2" />
             Username:
           </label>
@@ -104,7 +104,7 @@ const UserLogin = () => {
             onChange={onChange}
             required
           />
-          <label className="block flex items-center text-gray-700 text-sm font-bold mb-2 mt-4">
+          <label className="block flex items-center text-gray-700 text-m font-bold mb-2 mt-4">
             <RiLockPasswordFill className="mr-2" />
             Password:
           </label>

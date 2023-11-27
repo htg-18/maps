@@ -4,6 +4,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaUser } from 'react-icons/fa';
 import { RiLockPasswordFill } from 'react-icons/ri';
+import { MdEmail } from "react-icons/md";
+import { FaPhone } from "react-icons/fa";
 
 const CreateNewUser = () => {
   const navigate = useNavigate();
@@ -104,9 +106,9 @@ const CreateNewUser = () => {
 
   return (
     <div className="h-screen bg-zinc-300 font-bold flex flex-col justify-center ">
-      <h1 className="text-center text-[40px] text-teal-800 m-1">Create New User</h1>
+      <h1 className="text-center text-[40px] text-teal-800 m-1" style={{fontFamily: 'Roboto, sans-serif'}}>Create New User</h1>
 
-      <div className="bg-white mx-auto w-full font-semibold max-w-md p-8">
+      <div className="bg-white mx-auto w-full font-semibold max-w-md p-8 m-3" style={{fontFamily: 'Figtree, sans-serif'}}>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="username" className="flex items-center  text-gray-700 text-sm font-bold mb-2">
@@ -127,6 +129,7 @@ const CreateNewUser = () => {
 
           <div className="mb-4">
             <label htmlFor="email" className="flex items-center  text-gray-700 text-sm font-bold mb-2">
+            <MdEmail className='mr-2 text-lg'/>
               Email:
             </label>
             <input
@@ -143,6 +146,7 @@ const CreateNewUser = () => {
 
           <div className="mb-4">
             <label htmlFor="phoneNo" className="flex items-center  text-gray-700 text-sm font-bold mb-2">
+            <FaPhone className='mr-2'/>
               Phone Number:
             </label>
             <input
