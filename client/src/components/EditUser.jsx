@@ -37,14 +37,78 @@ const EditUser = ({ setModalVisible, user }) => {
     }
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setModalVisible(false);
-    // rest of your code...
+    setModalVisible(false)
+    try {
+      console.log(user.username);
+      const response = await fetch(`http://localhost:5000/edituser/${user.username}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log('User updated successfully!');
+        const username = userData.username;
+        setModalVisible(false)
+        toast.success(`Successfully Updated ${username}!`, {
+          position: 'top-right',
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: 'light',
+        });
+
+        // Clear form fields
+        setUserData({
+          username: '',
+          password: '',
+          email: '',
+          phoneNo: '',
+        });
+
+        // Redirect to a success page or reset the form
+        // navigate('/success');
+      } else {
+        setError(data.error || 'Error updating user');
+        toast.error(error, {
+          position: 'top-right',
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+      }
+    } catch (error) {
+      setError('Error updating user');
+      toast.error(error, {
+        position: 'top-right',
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+      console.error('Error updating user:', error.message);
+    }
   };
 
   return (
-    <div className="h-screen bg-white font-bold flex flex-col justify-center ">
+    <div className="bg-white font-bold flex flex-col justify-center ">
       <h1 className="text-center text-[40px] text-teal-800 m-1">Edit User</h1>
 
       <div className="bg-white mx-auto w-full  font-semibold max-w-md p-8">

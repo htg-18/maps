@@ -60,7 +60,7 @@ const UsersAll = () => {
   const handleChange = (value) => {
     setInput(value);
   };
-  console.log(button)
+  // console.log(button)
   const handleEditClick1 = (user) => {
     setSelectedUser(user);
     setModalVisible(true);
@@ -122,12 +122,12 @@ const UsersAll = () => {
                     <h2 className="text-lg font-semibold mb-2">{user.username}</h2>
                     <div className='flex'>
                     <IoTrashBin 
-                      className="hover:text-teal-800 text-2xl"
+                      className="hover:text-[#cd1818] text-2xl"
                       style={{ fontSize: '2xl', cursor: 'pointer',marginRight:15 }}
                       onClick={() => handleEditClick1(user)}
                     />
                     <MdEdit
-                      className="hover:text-teal-800 text-2xl"
+                      className="hover:text-[#186f65] text-2xl"
                       style={{ fontSize: '2xl', cursor: 'pointer' }}
                       onClick={() => handleEditClick2(user)}
                     />

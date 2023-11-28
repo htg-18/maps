@@ -102,7 +102,7 @@ const Adminrequest = () => {
         <div className="max-w-md mx-auto mt-8 w-[100%] flex flex-col items-center justify-center">
           <form onSubmit={handleSubmit} className="w-[80%] bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <div className="mb-4">
-              <label className="flex items-center block text-gray-700 text-sm font-bold mb-2" htmlFor="item">
+              <label className="flex items-center  text-gray-700 text-sm font-bold mb-2" htmlFor="item">
               <BiSolidFactory style={{paddingRight:5,fontSize:20}}/>
                 Inventory Item
               </label>
@@ -123,7 +123,7 @@ const Adminrequest = () => {
               </select>
             </div>
             <div className="mb-4">
-              <label className="flex items-center block text-gray-700 text-sm font-bold mb-2" htmlFor="quantity">
+              <label className="flex items-center  text-gray-700 text-sm font-bold mb-2" htmlFor="quantity">
                 <FaCartPlus style={{paddingRight:6,fontSize:20}}/>
                 Quantity
               </label>
@@ -142,7 +142,7 @@ const Adminrequest = () => {
               )}
             </div>
             <div className="mb-4">
-              <label className="flex items-center block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
+              <label className="flex items-center  text-gray-700 text-sm font-bold mb-2" htmlFor="description">
                 <MdDescription style={{paddingRight:6,fontSize:20}}/>
                 Description
               </label>

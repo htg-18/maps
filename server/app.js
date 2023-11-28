@@ -31,6 +31,15 @@ app.use('/',authpath);
 //inventorypath have routes of 
 // post - '/additemsbymangement' - add items by management
 // get - '/allinventoryitems'  -Route to get all items not associated with any user
+// post - '/requestforinventory' - api request by user for inventory
+// get -  '/pendingrequestsuser' - get pending requests for a particular user
+// get -  '/approvedrequestsuser' - get approved requests for a particular user
+// get -  '/rejectedrequestsuser' - get rejected requests for a particular user
+// put -  '/handlerequests/:requestId' - approve and reject inventory requests by admin
+// get -  '/allpendingrequests' - get all pending requests for admin
+// get  -  '/allrejectedrequests' - get all rejected requests for admin
+// get  - '//allapprovedrequests' - get all approved requests for admin
+
 app.use('/',inventorypath);
 
 app.listen(port,()=>{

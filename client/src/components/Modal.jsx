@@ -7,7 +7,7 @@ const Modal = ({ setModalVisible ,user,button}) => {
     <div className="modal-wrapper " onClick='' style={{fontFamily: 'Figtree, sans-serif'}}>
       <div className="modal-content">
         {/* Your modal content goes here */}
-        {button==1?<DeleteUser setModalVisible={setModalVisible}/>:<EditUser setModalVisible={setModalVisible} user={user}/>}
+        {button==1?<DeleteUser setModalVisible={setModalVisible} user={user}/> : <EditUser setModalVisible={setModalVisible} user={user}/>}
         
         
       </div>

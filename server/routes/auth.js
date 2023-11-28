@@ -73,8 +73,15 @@ router.post("/userlogin", async (req, res) => {
                  .json({ success,error: "Please try to login with correct credentials" });
          }
        
-         res.json({ message: 'Login successful' });
-
+         const data = {
+          user: {
+              id: user.id,
+          },
+      };
+      const authtoken = jwt.sign(data, JWT_SECRET); // signing data wiht JWT_SECRET
+      success=true;
+      res.json({ success,authtoken });
+     
      } catch (error) {
          console.log(error.message);
          res.status(500).send("Internal Server Error");
@@ -155,7 +162,7 @@ router.get('/getallusers', async (req, res) => {
 
 
 
-// editing user details by admin
+// editing user details by username , admin is doing this
 router.put("/edituser/:username",
   [
     body("username", "Enter a valid username"),
@@ -199,6 +206,36 @@ router.put("/edituser/:username",
     }
   }
 );
+
+
+
+
+
+// Delete a user by username, admin is doing is
+router.delete("/deleteuser/:username", async (req, res) => {
+  let success = false;
+
+  // Extract the username from the request parameters
+  const username = req.params.username;
+
+  try {
+    // Find the user by their username
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Delete the user
+    await User.deleteOne({ username: user.username });
+
+    success = true;
+    res.status(200).json({ success, message: 'User deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 
 
 module.exports = router;
