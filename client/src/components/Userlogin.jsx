@@ -36,7 +36,7 @@ const UserLogin = () => {
     });
     const json = await response.json();
     console.log(json);
-    if (json.message === 'Login successful') {
+    if (json.success) {
       toast.success('Logged In! Redirecting...', {
         position: "top-right",
         autoClose: 1000,
@@ -47,7 +47,8 @@ const UserLogin = () => {
         progress: undefined,
         theme: "light",
       });
-
+      
+      localStorage.setItem('token',json.authtoken);
       setTimeout(() => {
         navigate("/userdashboard");
       }, 2000);
