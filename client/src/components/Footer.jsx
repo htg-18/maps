@@ -6,7 +6,7 @@ import { FaWhatsapp } from "react-icons/fa";
 import wave from "../assets/wave.png"
 const Footer = () => {
   return (
-    <footer className='relative flex flex-col p-4 bottom-0 min-h-80  w-screen bg-teal-900 pb-2 pt-3'
+    <footer className='max-w-screen flex flex-col p-4 bottom-0 min-h-80  bg-teal-900 pb-2 pt-3'
      style={{fontFamily: 'Roboto, sans-serif'}}
     >
       {/* <div className='waves'>
@@ -18,20 +18,20 @@ const Footer = () => {
     <div className='flex justify-between '>
   
      <div className='flex items-center'>
-      <FaFacebookF style={{color:'white',margin:10,cursor:'pointer',fontSize:19}}
+      <FaFacebookF style={{color:'white',margin:10,cursor:'pointer',fontSize:25}}
          onMouseOver={(e) => (e.target.style.color = '#55acee')}
           onMouseOut={(e) => (e.target.style.color = 'white')}
       />
-      <FaLinkedinIn style={{color:'white',margin:10,cursor:'pointer',fontSize:22}}
+      <FaLinkedinIn style={{color:'white',margin:10,cursor:'pointer',fontSize:28}}
         onMouseOver={(e) => (e.target.style.color = '#0077b5')}
           onMouseOut={(e) => (e.target.style.color = 'white')}
       />
-      <SiGmail style={{color:'white',margin:10,cursor:'pointer',fontSize:22}}
+      <SiGmail style={{color:'white',margin:10,cursor:'pointer',fontSize:28}}
          onMouseOver={(e) => (e.target.style.color = '#dd4b39')}
           onMouseOut={(e) => (e.target.style.color = 'white')}
       />
       <FaWhatsapp 
-        style={{color:'white',margin:10,cursor:'pointer',fontSize:26}}
+        style={{color:'white',margin:10,cursor:'pointer',fontSize:32}}
          onMouseOver={(e) => (e.target.style.color = '#25d366')}
           onMouseOut={(e) => (e.target.style.color = 'white')}
       />
@@ -39,8 +39,9 @@ const Footer = () => {
       <div className='text-white'  style={{
           borderLeft: '1px solid white', // Add a vertical line here
           paddingLeft: '10px', // Add some padding to separate the line from the text
-          fontWeight: 'bold',
-          cursor: 'pointer'
+          fontWeight: 500,
+          cursor: 'pointer',
+          fontSize:20
         }}
         onMouseOver={(e) => (e.target.style.color = '#be3144')}
         onMouseOut={(e) => (e.target.style.color = 'white')}

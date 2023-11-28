@@ -13,12 +13,15 @@ import UserRequests from "./components/UserRequests"
 import Navbar from "./components/Navbar"
 import Users from "./components/Users"
 import Footer from "./components/Footer"
+import About from "./components/About"
+import Contacts from "./components/Contacts"
+import Services from "./components/Services"
 function App() {
   
   return (
     <>
     {/* <div><Toaster/></div> */}
-      <Router>
+      <Router >
         <Navbar/>
         <Routes>
           
@@ -31,12 +34,12 @@ function App() {
           <Route path="/createNewUser" element={<CreateNewUser/>}/>
           <Route path="/userrequests" element={<UserRequests/>}/>
           <Route path="/admin/users" element={<Users/>}/>
+          <Route path="/about" element={<About/>}/>
+          <Route path="/contact" element={<Contacts/>}/>
+          <Route path="/services" element={<Services/>}/>
         </Routes>
         <Footer/>
       </Router>
-
-
-      {/* toast("Hello World") */}
        <ToastContainer/>
     </>
   )
