@@ -7,7 +7,7 @@ import { RiLockPasswordFill } from 'react-icons/ri';
 import { MdEmail } from "react-icons/md";
 import { FaPhone } from "react-icons/fa";
 
-const EditUser = ({ setModalVisible, user }) => {
+const EditUser = ({ setModalVisible, user ,setRefresh}) => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({
     username: user.username,
@@ -67,7 +67,7 @@ const EditUser = ({ setModalVisible, user }) => {
           progress: undefined,
           theme: 'light',
         });
-
+        setRefresh(true)
         // Clear form fields
         setUserData({
           username: '',

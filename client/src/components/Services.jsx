@@ -103,6 +103,20 @@ export default function Services() {
           </Typography>
         </AccordionDetails>
       </Accordion>
+      <Accordion expanded={expanded === 'panel6'} onChange={handleChange('panel6')} style={{width:'80%'}}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel4bh-content"
+          id="panel4bh-header"
+        >
+          <Typography sx={{ width: '100%', flexShrink: 0 }}>What are the admin priviliges?</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography sx={{ color: 'text.secondary' }}>
+          The Admin is able to view all the users their past orders. They can also send new inventory reqest to the management
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
     </div>
   );
 }

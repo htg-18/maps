@@ -70,5 +70,3 @@ const Footer = () => {
 }
 
 export default Footer
-// Lnmiit_Inventory_Management\client\src\assets\wave.png
-// Lnmiit_Inventory_Management\client\src\components\Footer.jsx
