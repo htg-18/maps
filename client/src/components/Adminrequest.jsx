@@ -66,6 +66,11 @@ const Adminrequest = () => {
       if (data.success) {
         console.log(data.success);
         toast.success('Success! Management will be notified', { theme: 'light' });
+        setFormData({
+          item: '',
+          quantity: '',
+          description: '',
+        })
       } else {
         toast.error('Error! Not able to process the request', { theme: 'light' });
       }

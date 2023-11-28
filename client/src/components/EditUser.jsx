@@ -7,13 +7,13 @@ import { RiLockPasswordFill } from 'react-icons/ri';
 import { MdEmail } from "react-icons/md";
 import { FaPhone } from "react-icons/fa";
 
-const EditUser = ({setModalVisible}) => {
+const EditUser = ({ setModalVisible, user }) => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({
-    username: '',
+    username: user.username,
     password: '',
-    email: '',
-    phoneNo: '',
+    email: user.email,
+    phoneNo: user.phoneNo,
   });
 
   const [error, setError] = useState('');
@@ -21,17 +21,17 @@ const EditUser = ({setModalVisible}) => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     let trimmedValue = value.trim(); // Trim whitespace from both ends
-  
+
     // Check if the value is a valid phone number
     const regex = /^\d{10}$/;
     const isValidPhoneNo = regex.test(trimmedValue);
-  
+
     // Update the user data with the trimmed value
     setUserData({ ...userData, [name]: trimmedValue });
-  
+
     // Set the error message if the phone number is invalid
     if (name === 'phoneNo' && !isValidPhoneNo) {
-      setError('Phone number must be 10 digit Number!');
+      setError('Phone number must be a 10-digit number!');
     } else if (name === 'phoneNo' && isValidPhoneNo) {
       setError('');
     }
@@ -39,75 +39,13 @@ const EditUser = ({setModalVisible}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setModalVisible(false)
-    try {
-      const response = await fetch('http://localhost:5000/createnewuser', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        console.log('User created successfully!');
-        const username = userData.username;
-        setModalVisible(false)
-        toast.success(`Successfully added ${username}!`, {
-          position: 'top-right',
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: false,
-          draggable: false,
-          progress: undefined,
-          theme: 'light',
-        });
-
-        // Clear form fields
-        setUserData({
-          username: '',
-          password: '',
-          email: '',
-          phoneNo: '',
-        });
-
-        // Redirect to a success page or reset the form
-        // navigate('/success');
-      } else {
-        setError(data.error || 'Error creating user');
-        toast.error(error, {
-          position: 'top-right',
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'light',
-        });
-      }
-    } catch (error) {
-      setError('Error creating user');
-      toast.error(error, {
-        position: 'top-right',
-        autoClose: 1500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-      });
-      console.error('Error creating user:', error.message);
-    }
+    setModalVisible(false);
+    // rest of your code...
   };
 
   return (
     <div className="h-screen bg-white font-bold flex flex-col justify-center ">
-      <h1 className="text-center text-[40px] text-teal-800 m-1">Create New User</h1>
+      <h1 className="text-center text-[40px] text-teal-800 m-1">Edit User</h1>
 
       <div className="bg-white mx-auto w-full  font-semibold max-w-md p-8">
         <form onSubmit={handleSubmit}>
@@ -137,7 +75,7 @@ const EditUser = ({setModalVisible}) => {
               type="email"
               id="email"
               name="email"
-              value={userData.email}
+              value={userData.email}  
               onChange={handleInputChange}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
               placeholder="Enter your email"
@@ -156,15 +94,11 @@ const EditUser = ({setModalVisible}) => {
               name="phoneNo"
               value={userData.phoneNo}
               onChange={handleInputChange}
-
-
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
               placeholder="Enter your phone number"
               required
             />
           </div>
-
-          
 
           {/* {error && (
             <div className="mb-4 text-red-500 text-sm font-bold">{error}</div>
@@ -177,8 +111,6 @@ const EditUser = ({setModalVisible}) => {
             >
               Edit User
             </button>
-
-           
           </div>
         </form>
       </div>

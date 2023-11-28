@@ -26,8 +26,8 @@ const Navbar = () => {
         };
       }, []);
   return (
-    <nav  className='w-screen min-w-screen min-h-[70px] flex justify-between items-center bg-teal-900 sticky top-0'
-     style={{fontFamily: 'Roboto, sans-serif'}}
+    <nav  className=' min-h-[70px] flex justify-between items-center bg-teal-900 sticky top-0'
+     style={{fontFamily: 'Roboto, sans-serif',zIndex:'100'}}
     >
 
 <Link to="/admindashboard" className='text-white text-3xl font-extrabold'>
@@ -40,19 +40,19 @@ const Navbar = () => {
         <span></span>
       </div>
 
-      <ul className={`flex text-white ${menuOpen ? 'open' : 'hidden'}`}>
+      <ul className={`flex text-white ${menuOpen ? 'open' : 'hidden'}`} style={{fontSize:18,fontWeight:400}}>
         <li className='p-3 rounded-[12px]'>
-          <NavLink to="/about" activeClassName="active" onClick={() => setMenuOpen(false)}>
-            About
+          <NavLink to="/about" onClick={() => setMenuOpen(false)}>
+            About Us
           </NavLink>
         </li>
         <li className='p-3 rounded-[6px]'>
-          <NavLink to="/Services" activeClassName="active" onClick={() => setMenuOpen(false)}>
+          <NavLink to="/Services"  onClick={() => setMenuOpen(false)}>
             Services
           </NavLink>
         </li>
         <li className='p-3 rounded-[6px]'>
-          <NavLink to="/Contact" activeClassName="active" onClick={() => setMenuOpen(false)}>
+          <NavLink to="/Contact" onClick={() => setMenuOpen(false)}>
             Contacts
           </NavLink>
         </li>
@@ -86,7 +86,9 @@ const Navbar = () => {
                 background-color: #fff;
                 border-radius: 0.2rem;
             }
-
+            .hidden,.open{
+              display:flex;
+            }
 
             @media (max-width: 480px) {
                 nav .menu {
