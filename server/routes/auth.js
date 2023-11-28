@@ -153,4 +153,52 @@ router.get('/getallusers', async (req, res) => {
   });
 
 
+
+
+// editing user details by admin
+router.put("/edituser/:username",
+  [
+    body("username", "Enter a valid username"),
+    body("email", "Enter a valid Email").isEmail(),
+    body("phoneNo", "Phone number must be 10 digits").isLength({ min: 10, max: 10 }),
+  ],
+  async (req, res) => {
+    let success = false;
+
+    // Extract the username from the request parameters
+    const username= req.params.username;
+
+    // Validate the updated user information
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ success, errors: errors.array() });
+    }
+
+    // Destructure the updated information from req.body
+    const data = req.body;
+
+    try {
+      // Find the user by their username
+      const user = await User.findOne({ username });
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+
+      // Update the user's information
+      user.username = data.username;
+      user.email = data.email;
+      user.phoneNo = data.phoneNo;
+
+      await user.save();
+
+      success = true;
+      res.status(200).json({ success, message: 'User information updated successfully' });
+    } catch (error) {
+      console.error('Error updating user:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  }
+);
+
+
 module.exports = router;

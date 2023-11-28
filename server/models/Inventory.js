@@ -15,12 +15,23 @@ const inventorySchema = new mongoose.Schema({
     required: true,
     default: 0,
   },
-  // Reference to User model
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
-
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
+  requestStatus: {
+    type: String,
+    enum: ['pending', 'approved', 'rejected'],
+    default: 'pending',
+  },
+  requestedByUser: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
 });
 
 const Inventory = mongoose.model('Inventory', inventorySchema);

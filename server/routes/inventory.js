@@ -80,4 +80,144 @@ router.get('/allinventoryitems', async (req, res) => {
 
 
 
+
+
+//api request by user for the inventory request
+router.post('/requestforinventory', async (req, res) => {
+    try {
+      const { itemName, itemId, itemQuantity } = req.body;
+      const userId = req.user._id; // Get the current user ID from the request
+  
+      const inventoryRequest = new Inventory({
+        itemName,
+        itemId,
+        itemQuantity,
+        user: userId,
+        requestStatus: 'pending',
+        requestedByUser: userId,
+        createdAt: Date.now(), // Add the createdAt field
+      });
+  
+      await inventoryRequest.save();
+  
+      res.status(200).json({ success: true, message: 'Inventory request submitted successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+  });
+  
+
+
+
+//get pending requests for that particular user
+  router.get('/pendingrequestsuser', async (req, res) => {
+    try {
+      const userId = req.user._id;
+      const pendingRequests = await Inventory.find({ user: userId, requestStatus: 'pending' });
+      res.status(200).json({ success: true, data: pendingRequests });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+  });
+  
+
+// get approved requests for particular user
+router.get('/approvedrequestsuser', async (req, res) => {
+    try {
+      const userId = req.user._id;
+      const approvedInventoryItems = await Inventory.find({ user: userId, requestStatus: 'approved' });
+      res.status(200).json({ success: true, data: approvedInventoryItems });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+  });
+  
+
+
+
+// get rejected requests for particular user
+router.get('/rejectedrequestsuser', async (req, res) => {
+    try {
+      const userId = req.user._id;
+      const rejectedInventoryItems = await Inventory.find({ user: userId, requestStatus: 'rejected' });
+      res.status(200).json({ success: true, data: rejectedInventoryItems });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+  });
+
+  
+
+
+// approve and reject inventory requests by admin
+router.put('/handlerequests/:requestId', async (req, res) => {
+    try {
+      const requestId = req.params.requestId;
+      const action = req.body.action; // 'approve' or 'reject'
+  
+      const inventoryItem = await Inventory.findById(requestId);
+  
+      if (!inventoryItem) {
+        return res.status(404).json({ message: 'Inventory request not found' });
+      }
+  
+      if (action === 'approve') {
+        inventoryItem.requestStatus = 'approved';
+      } else if (action === 'reject') {
+        inventoryItem.requestStatus = 'rejected';
+      } else {
+        return res.status(400).json({ message: 'Invalid action' });
+      }
+  
+      await inventoryItem.save();
+  
+      res.status(200).json({ success: true, message: 'Inventory request updated successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+  });
+  
+
+// get all pending requests for admin
+router.get('/allpendingrequests', async (req, res) => {
+    try {
+      const allRequests = await Inventory.find({ requestStatus: 'pending' });
+      res.status(200).json({ success: true, data: allRequests });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+  });
+  
+
+//Get all rejected requests for admin:
+router.get('/allrejectedrequests', async (req, res) => {
+    try {
+      const allRejectedRequests = await Inventory.find({ requestStatus: 'rejected' });
+      res.status(200).json({ success: true, data: allRejectedRequests });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+  });
+  
+//Get all approved requests for admin:
+router.get('/allapproverequests', async (req, res) => {
+    try {
+      const allApprovedRequests = await Inventory.find({ requestStatus: 'approved' });
+      res.status(200).json({ success: true, data: allApprovedRequests });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Internal Server Error' });
+    }
+  });
+  
+
+
+
 module.exports = router;
