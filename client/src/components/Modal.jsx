@@ -1,12 +1,15 @@
 import React from 'react';
 import EditUser from './EditUser';
+import DeleteUser from './DeleteUser';
 
-const Modal = ({ setModalVisible ,user}) => {
+const Modal = ({ setModalVisible ,user,button}) => {
   return (
-    <div className="modal-wrapper" onClick='' style={{fontFamily: 'Figtree, sans-serif'}}>
+    <div className="modal-wrapper " onClick='' style={{fontFamily: 'Figtree, sans-serif'}}>
       <div className="modal-content">
         {/* Your modal content goes here */}
-        <EditUser setModalVisible={setModalVisible} user={user}/>
+        {button==1?<DeleteUser setModalVisible={setModalVisible}/>:<EditUser setModalVisible={setModalVisible} user={user}/>}
+        
+        
       </div>
       <style>
         {`
