@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const DeleteUser = ({ user, setModalVisible }) => {
+const DeleteUser = ({ user, setModalVisible ,setRefresh}) => {
   const navigate = useNavigate();
  
   const [error, setError] = useState('');
@@ -35,7 +35,7 @@ const DeleteUser = ({ user, setModalVisible }) => {
           progress: undefined,
           theme: 'light',
         });
-
+         setRefresh(true)
         // Redirect to a success page or reset the form
         // navigate('/success');
       } else {

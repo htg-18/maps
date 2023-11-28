@@ -1,6 +1,3 @@
-
-
-
 import React, { useState, useEffect } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import notFound from '../assets/not-found-404error.gif';
@@ -17,12 +14,17 @@ const UsersAll = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [button, setButton] = useState()
+  const [refresh,setRefresh]=useState(false);
 
   useEffect(() => {
     // Fetch user data when the component mounts
     fetchUsers();
   }, []);
-
+   useEffect(()=>{
+    
+    fetchUsers()
+    setRefresh(false)
+   },[refresh])
   useEffect(() => {
     const handleOutsideClick = (e) => {
       if (modalVisible && e.target.classList.contains('modal-wrapper')) {
@@ -140,7 +142,7 @@ const UsersAll = () => {
           </Stack>
         )}
       </div>
-      {modalVisible && <Modal setModalVisible={setModalVisible} user={selectedUser} button={button}/>}
+      {modalVisible && <Modal setModalVisible={setModalVisible} user={selectedUser} button={button} setRefresh={setRefresh} />}
     </div>
   );
 };
