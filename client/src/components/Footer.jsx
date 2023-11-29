@@ -36,7 +36,7 @@ const Footer = () => {
           onMouseOut={(e) => (e.target.style.color = 'white')}
       />
       </div>
-      <div className='text-white'  style={{
+      {/* <div className='text-white'  style={{
           borderLeft: '1px solid white', // Add a vertical line here
           paddingLeft: '10px', // Add some padding to separate the line from the text
           fontWeight: 500,
@@ -45,7 +45,7 @@ const Footer = () => {
         }}
         onMouseOver={(e) => (e.target.style.color = '#be3144')}
         onMouseOut={(e) => (e.target.style.color = 'white')}
-        >SignOut</div>
+        >SignOut</div> */}
     </div>
     {/* <hr /> */}
     <p className='text-white text-sm m-auto' style={{opacity:'0.75'}}>Copyright @ Team49</p>

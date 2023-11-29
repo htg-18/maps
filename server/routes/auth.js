@@ -10,40 +10,43 @@ const JWT_SECRET = "whatadayboy";
 
 
 router.post("/adminlogin", async (req, res) => {
-    let success=false;
-     // if there are errors, return bad requests and errors
-     // const errors = validationResult(req);
-     // if (!errors.isEmpty()) {
-     //     return res.status(400).json({ errors: errors.array() });
-     // }
+  let success = false;
 
-     const { username, password} = req.body;
-     try {
-         let user = await Admin.findOne({ username });
-         if (!user) {
-             success:false
-             return res
-                 .status(400)
-                 .json({ error: "Please try to login with correct credentials" });
-         }
+  const { username, password } = req.body;
 
-         const passwordCompare = await bcrypt.compare(password, user.password);
-        
-         if (!passwordCompare) {
-              success=false;
-             return res
-                 .status(400)
-                 .json({ success,error: "Please try to login with correct credentials " });
-         }
-       
-         res.json({ message: 'Login successful' });
+  try {
+    let user = await Admin.findOne({ username });
 
-     } catch (error) {
-         console.log(error.message);
-         res.status(500).send("Internal Server Error");
-     }
- }
-);
+    if (!user) {
+      success = false;
+      return res
+        .status(400)
+        .json({ error: "Please try to login with correct credentials" });
+    }
+
+    const passwordCompare = await bcrypt.compare(password, user.password);
+
+    if (!passwordCompare) {
+      success = false; // Set success to false if password comparison fails
+      return res
+        .status(400)
+        .json({ success, error: "Please try to login with correct credentials" });
+    }
+
+    const data = {
+      user: {
+        id: user.id,
+      },
+    };
+
+    const authtoken = jwt.sign(data, JWT_SECRET); // signing data with JWT_SECRET
+    success = true; // Set success to true if password comparison succeeds
+    res.json({ success, authtoken });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Internal Server Error");
+  }
+});
 
 // route for login by user
 router.post("/userlogin", async (req, res) => {
@@ -160,6 +163,20 @@ router.get('/getallusers', async (req, res) => {
   });
 
 
+//get a particular user using userId
+router.get('/getuser/:userId', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    if (!user) {
+      return res.status(404).send({ success: false, message: 'User not found' });
+    }
+
+    res.json({ success: true, user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ success: false, message: 'Internal server error' });
+  }
+});
 
 
 // editing user details by username , admin is doing this

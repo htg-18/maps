@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const inventorySchema = new mongoose.Schema({
   itemName: {
     type: String,
+    unique:true,
     required: true,
   },
   itemId: {
@@ -18,15 +19,15 @@ const inventorySchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
+    unique:true,
   },
   createdAt: {
     type: Date,
     default: Date.now(),
   },
-  requestStatus: {
+  requestStatus:{
     type: String,
-    enum: ['pending', 'approved', 'rejected'],
-    default: 'pending',
+    enum: ['pending', 'approved', 'rejected','discard'], 
   },
   requestedByUser: {
     type: mongoose.Schema.Types.ObjectId,

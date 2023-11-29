@@ -40,8 +40,8 @@ const AdminLogin = () => {
       }),
     });
     const json = await response.json();
-    console.log(json);
-    if (json.message === 'Login successful') {
+    // console.log(json);
+    if (json.success) {
       toast.success('Logged In! Redirecting...', {
         position: 'top-right',
         autoClose: 1000,
@@ -52,10 +52,10 @@ const AdminLogin = () => {
         progress: undefined,
         theme: 'light',
       });
-
+      localStorage.setItem('admintoken',json.authtoken);
       setTimeout(() => {
         navigate('/admindashboard');
-      }, 2000);
+      }, 1000);
     } else {
       toast.error('Invalid Admin Credentials', {
         position: 'top-right',
@@ -98,7 +98,7 @@ const AdminLogin = () => {
             windowWidth < 1200 ? 'w-full' : 'w-[70%]'
           } h-[40%] bg-white shadow-md rounded-[10px] px-8 pt-6 pb-8 mb-4 flex flex-col justify-evenly`}
         >
-          <label className="flex items-center block text-gray-700 text-m font-bold mb-2">
+          <label className="flex items-center  text-gray-700 text-m font-bold mb-2">
             <FaUser className="mr-2" />
             Username:
           </label>
@@ -111,7 +111,7 @@ const AdminLogin = () => {
             onChange={onChange}
             required
           />
-          <label className="block text-gray-700 text-m font-bold mb-2 mt-4 flex items-center">
+          <label className=" text-gray-700 text-m font-bold mb-2 mt-4 flex items-center">
           <RiLockPasswordFill className="mr-2"/>
             Password:
           </label>

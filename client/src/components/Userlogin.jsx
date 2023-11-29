@@ -35,7 +35,7 @@ const UserLogin = () => {
       body: JSON.stringify({ username: credentials.username, password: credentials.password })
     });
     const json = await response.json();
-    console.log(json);
+    // console.log(json);
     if (json.success) {
       toast.success('Logged In! Redirecting...', {
         position: "top-right",
@@ -51,7 +51,7 @@ const UserLogin = () => {
       localStorage.setItem('token',json.authtoken);
       setTimeout(() => {
         navigate("/userdashboard");
-      }, 2000);
+       }, 2000);
     } else {
       toast.error('Invalid User Credentials', {
         position: "top-right",

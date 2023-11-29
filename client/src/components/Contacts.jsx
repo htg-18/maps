@@ -62,8 +62,8 @@ const Contacts = () => {
     return (
         <div className='flex flex-col min-h-screen bg-zinc-300 items-center justify-center'>
             <h1 className='text-3xl text-teal-700 mb-5 font-bold'>Feedback Form</h1>
-            <form ref={form} onSubmit={sendEmail} className='sm:w-[90%] md:w-[70%] lg:w-[50%] flex flex-col w-[50%] h-[40%] bg-white shadow-md rounded-[10px] px-8 pt-6 pb-8 mb-4 flex flex-col justify-evenly'>
-                <label className='block text-gray-700 text-m font-bold mb-2 mt-4 flex items-center'>
+            <form ref={form} onSubmit={sendEmail} className='sm:w-[90%] md:w-[70%] lg:w-[50%] flex flex-col w-[50%] h-[40%] bg-white shadow-md rounded-[10px] px-8 pt-6 pb-8 mb-4 justify-evenly'>
+                <label className=' text-gray-700 text-m font-bold mb-2 mt-4 flex items-center'>
                 <FaUser className='m-[4px]'/>
                 Name</label>
                 <input
@@ -75,7 +75,7 @@ const Contacts = () => {
                     onChange={handleInputChange}
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
                 />
-                <label className='block text-gray-700 text-m font-bold mb-2 mt-4 flex items-center'>
+                <label className=' text-gray-700 text-m font-bold mb-2 mt-4 flex items-center'>
                 <MdEmail className='m-[4px]'/>
                 Email</label>
                 <input
@@ -87,7 +87,7 @@ const Contacts = () => {
                     onChange={handleInputChange}
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none"
                 />
-                <label className='block text-gray-700 text-m font-bold mb-2 mt-4 flex items-center'>
+                <label className=' text-gray-700 text-m font-bold mb-2 mt-4 flex items-center'>
                 <AiFillMessage className='m-[4px]'/>
                 Message</label>
                 <textarea

@@ -24,6 +24,7 @@ app.use(bodyParser.json()); // Make sure this line is present
 //  post - '/userlogin'  - login by user
 //  post -  '/createnewuser' - new user created by admin
 //  get -   '/getallusers'  - get all users 
+// get  -    'getuser/:userId' - get user as per its userId
 //  put -    '/edituser/:username'  - editing user details corresponding to username
 app.use('/',authpath);
 

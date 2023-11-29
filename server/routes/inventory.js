@@ -5,6 +5,7 @@ const Inventory = require('../models/Inventory');
 
 const uuid = require('uuid');
 const nodemailer = require('nodemailer');
+const fetchuser = require("../middleware/Fetchusers");
 
 //adding inventory to db after filling form of request to management
 // Route to add items to the inventory
@@ -83,23 +84,25 @@ router.get('/allinventoryitems', async (req, res) => {
 
 
 //api request by user for the inventory request
-router.post('/requestforinventory', async (req, res) => {
+router.post('/requestforinventory',fetchuser, async (req, res) => {
     try {
-      const { itemName, itemId, itemQuantity } = req.body;
+      const { itemName, itemQuantity,description } = req.body;
       const userId = req.user._id; // Get the current user ID from the request
-  
+      // console.log(userId);
+      const itemId = uuid.v4();
+         
       const inventoryRequest = new Inventory({
         itemName,
         itemId,
-        itemQuantity,
+        itemQuantity: parseInt(itemQuantity, 10),
         user: userId,
         requestStatus: 'pending',
         requestedByUser: userId,
         createdAt: Date.now(), // Add the createdAt field
       });
-  
-      await inventoryRequest.save();
-  
+   
+       await inventoryRequest.save();
+    
       res.status(200).json({ success: true, message: 'Inventory request submitted successfully' });
     } catch (error) {
       console.error(error);
@@ -111,7 +114,7 @@ router.post('/requestforinventory', async (req, res) => {
 
 
 //get pending requests for that particular user
-  router.get('/pendingrequestsuser', async (req, res) => {
+  router.get('/pendingrequestsuser',fetchuser, async (req, res) => {
     try {
       const userId = req.user._id;
       const pendingRequests = await Inventory.find({ user: userId, requestStatus: 'pending' });
@@ -124,7 +127,7 @@ router.post('/requestforinventory', async (req, res) => {
   
 
 // get approved requests for particular user
-router.get('/approvedrequestsuser', async (req, res) => {
+router.get('/approvedrequestsuser',fetchuser, async (req, res) => {
     try {
       const userId = req.user._id;
       const approvedInventoryItems = await Inventory.find({ user: userId, requestStatus: 'approved' });
@@ -136,10 +139,8 @@ router.get('/approvedrequestsuser', async (req, res) => {
   });
   
 
-
-
 // get rejected requests for particular user
-router.get('/rejectedrequestsuser', async (req, res) => {
+router.get('/rejectedrequestsuser',fetchuser, async (req, res) => {
     try {
       const userId = req.user._id;
       const rejectedInventoryItems = await Inventory.find({ user: userId, requestStatus: 'rejected' });
@@ -152,6 +153,18 @@ router.get('/rejectedrequestsuser', async (req, res) => {
 
   
 
+// Separate function to remove approved request
+async function removeApprovedRequest(requestId) {
+  try {
+    const inventoryItem = await Inventory.findOne({ _id: requestId });
+
+    if (inventoryItem && inventoryItem.requestStatus === 'approved') {
+      await inventoryItem.remove(); // Remove the approved request
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 // approve and reject inventory requests by admin
 router.put('/handlerequests/:requestId', async (req, res) => {
@@ -159,14 +172,26 @@ router.put('/handlerequests/:requestId', async (req, res) => {
       const requestId = req.params.requestId;
       const action = req.body.action; // 'approve' or 'reject'
   
-      const inventoryItem = await Inventory.findById(requestId);
-  
+      // const inventoryItem = await Inventory.findById(requestId);
+      const inventoryItem = await Inventory.findOne({ _id: requestId });
+
       if (!inventoryItem) {
         return res.status(404).json({ message: 'Inventory request not found' });
       }
-  
+    
       if (action === 'approve') {
-        inventoryItem.requestStatus = 'approved';
+        // find if inventory already exists for this request,
+        const existingInventoryItem = await Inventory.findOne({ itemName: inventoryItem.itemName, user: inventoryItem.user,requestStatus:"approved" });
+        console.log(inventoryItem.user);
+        if (existingInventoryItem) {
+          existingInventoryItem.itemQuantity += parseInt(inventoryItem.itemQuantity,10);
+           console.log('existing');
+          inventoryItem.requestStatus = 'discard';
+          await existingInventoryItem.save();
+          await removeApprovedRequest(requestId);  // calling function to Delete the approved request since the item is already in inventory
+        } else {
+          inventoryItem.requestStatus = 'approved';
+        }
       } else if (action === 'reject') {
         inventoryItem.requestStatus = 'rejected';
       } else {

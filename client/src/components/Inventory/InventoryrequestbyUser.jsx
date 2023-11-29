@@ -1,14 +1,17 @@
 
+
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { dataitems } from '../../inventoryItems';
+import { dataitems } from '../../../inventoryItems';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 import { BiSolidFactory } from "react-icons/bi";
 import { FaCartPlus } from "react-icons/fa";
 import { MdDescription } from "react-icons/md";
 
-const Adminrequest = () => {
+const UserRequestForInvetory = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     item: '',
@@ -46,10 +49,11 @@ const Adminrequest = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/additemsbymangement', {
+      const response = await fetch('http://localhost:5000/requestforinventory', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'auth-token': localStorage.getItem('token'),
         },
         body: JSON.stringify({
           itemName: formData.item,
@@ -62,7 +66,7 @@ const Adminrequest = () => {
 
       if (data.success) {
         console.log(data.success);
-        toast.success('Success! Management will be notified', { theme: 'light' });
+        toast.success('Success! Inventory Requested', { theme: 'light' });
         setFormData({
           item: '',
           quantity: '',
@@ -94,7 +98,7 @@ const Adminrequest = () => {
     <div className=' '>
       {/* <Navbar/> */}
       <div className="h-screen  bg-zinc-300 flex flex-col  w-[100%]">
-        <h1 className='text-center text-[40px] font-bold text-teal-800 m-1'>Send request to management</h1>
+        <h1 className='text-center text-[40px] font-bold text-teal-800 m-1'>Request Inventory</h1>
 
         <div className="max-w-md mx-auto mt-8 w-[100%] flex flex-col items-center justify-center">
           <form onSubmit={handleSubmit} className="w-[80%] bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -163,7 +167,7 @@ const Adminrequest = () => {
               <button
                 className="w-[35%] bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
                 onClick={() => {
-                  navigate('/admindashboard');
+                  navigate('/userdashboard');
                 }}
               >
                 Back
@@ -176,6 +180,106 @@ const Adminrequest = () => {
   );
 };
 
-export default Adminrequest;
+export default UserRequestForInvetory;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // import fetch from 'fetch';
+
+// const InventoryRequest = () => {
+//   const [itemName, setItemName] = useState('');
+//   const [itemId, setItemId] = useState('');
+//   const [itemQuantity, setItemQuantity] = useState('');
+
+//   const handleSubmit = async (event) => {
+//     event.preventDefault();
+
+//     try {
+//       const response = await fetch('http://localhost:5000/requestforinventory', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//           'auth-token': localStorage.getItem('token'),
+//         },
+//         body: JSON.stringify({
+//           itemName,
+//           itemId,
+//           itemQuantity,
+//         }),
+//       });
+
+//       const data = await response.json();
+//       console.log(localStorage.getItem('token'));
+//       if (data.success) {
+//         alert('Inventory request submitted successfully');
+//         setItemName('');
+//         setItemId('');
+//         setItemQuantity('');
+//       } else {
+//         alert('An error occurred while submitting the inventory request');
+//       }
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   };
+
+
+
+//   return (
+//     <div className={`bg-zinc-300`}>
+//       <h1 className={`text-xl text-center pt-8`}>Inventory Request</h1>
+//       <form className={`bg-white mx-auto mt-4 p-4 rounded`} onSubmit={handleSubmit}>
+//         <label className={`block mb-2`}>Item Name:</label>
+//         <input
+//           type="text"
+//           className={`w-full p-2 rounded`}
+//           value={itemName}
+//           onChange={(event) => setItemName(event.target.value)}
+//         />
+
+//         <label className={`block mb-2`}>Item ID:</label>
+//         <input
+//           type="text"
+//           className={`w-full p-2 rounded`}
+//           value={itemId}
+//           onChange={(event) => setItemId(event.target.value)}
+//         />
+
+//         <label className={`block mb-2`}>Item Quantity:</label>
+//         <input
+//           type="number"
+//           className={`w-full p-2 rounded`}
+//           value={itemQuantity}
+//           onChange={(event) => setItemQuantity(event.target.value)}
+//         />
+
+//         <button type="submit" className={`bg-blue-500 text-white p-2 rounded mt-4 block mx-auto`}>
+//           Submit Request
+//         </button>
+//       </form>
+//     </div>
+//   );
+// };
+
+// export default InventoryRequest;

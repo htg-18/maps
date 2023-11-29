@@ -6,6 +6,7 @@ import Footer from './Footer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaPlus } from "react-icons/fa";
+import ApprovedUserRequests from './Inventory/ApprovedUserRequests';
 
 const Admindashboard = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const Admindashboard = () => {
 
        <button className="bg-teal-700 hover:bg-teal-900 text-white font-bold py-2 px-4 m-4 rounded"
            onClick={() => navigate('/myinventory')}>
-             My Inventory
+             All Inventory
          </button>
          <button className="flex items-center bg-teal-700 hover:bg-teal-900 text-white font-bold py-2 px-4 m-4 rounded"
            onClick={() => navigate('/requestitem')}>
@@ -36,7 +37,8 @@ const Admindashboard = () => {
     
 
        <div className=' flex flex-col items-center m-6'>
-          <InventoryList/>
+          <ApprovedUserRequests/>
+   
         </div>
         {/* <Footer/> */}
  </div>

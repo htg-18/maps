@@ -13,7 +13,7 @@ const Users = () => {
            onClick={() => navigate('/createNewUser')}>
            <FaPlus className='mx-2'/>Add New Users
          </button>
-         <button className="flex w-[20%] items-center justify-center bg-gray-500 hover:bg-gray-700 items-center bg-teal-700 hover:bg-teal-900 text-white font-bold py-2 px-4 m-4 mb-10 rounded"
+         <button className="flex w-[20%] justify-center   items-center bg-teal-700 hover:bg-teal-900 text-white font-bold py-2 px-4 m-4 mb-10 rounded"
            onClick={() => navigate(-1)}>
            Back
          </button>
