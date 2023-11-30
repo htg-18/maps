@@ -22,11 +22,21 @@ import MyRequests from "./components/Inventory/MyRequests";
 import PendingInventoryRequests from "./components/PendingInventoryRequests";
 import ProtectedRouteUser from "./components/ProtectedRouteUser";
 import ProtectedRouteAdmin from "./components/ProtectedRoutsAdmin";
+import { ShopContextProvider } from "./components/context/shop-context";
+import { useState,useEffect } from "react";
+import Arrow from "./components/Arrow";
+
+import MySkeleton from "./components/MySkeleton";
+
 
 function App() {
+
+
   return (
     <>
       {/* <div><Toaster/></div> */}
+      <ShopContextProvider>
+      {/* <MySkeleton/> */}
       <Router>
           {/* {!(
              window.location.pathname === "http://localhost:5173/adminlogin" ||
@@ -71,6 +81,8 @@ function App() {
             <Footer />
         </Router>
       <ToastContainer />
+       <Arrow  />
+      </ShopContextProvider>
     </>
   );
 }

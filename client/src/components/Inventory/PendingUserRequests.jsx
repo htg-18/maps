@@ -4,6 +4,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { FaSearch } from 'react-icons/fa';
 import notFound from "../../assets/not-found-404error.gif";
 import { CircularProgress, Stack } from "@mui/material";
+import MySkeleton from '../MySkeleton';
+import { FaExclamation } from 'react-icons/fa6';
 
 const PendingUserRequests = () => {
   const [inventory, setInventory] = useState([]);
@@ -66,11 +68,17 @@ const PendingUserRequests = () => {
       </div> */}
 
       <div className=" w-screen  container mx-auto  ">
-        <h1 className="text-2xl font-bold mb-4 text-center text-blue-600">Pending Requests</h1>
-        {loading && <CircularProgress />}
+        <h1 className="text-2xl font-bold mb-4 text-center text-teal-700">Pending Requests</h1>
+        {loading && <MySkeleton/>}
         {!loading && showNoItems && (
           // Display the GIF when there are no filtered items
-          <img src={notFound} alt="No items found" className='m-auto p-auto h-[300px] w-[300px] rounded-[10px]'/>
+         
+          <div className='m-auto'>
+            <div className='h-36 w-36 rounded-full bg-red-400 flex items-center justify-center m-auto'>
+              <FaExclamation className='text-[100px] text-white' />
+            </div>
+            <p className='text-xl text-zinc-500 pt-5 text-center'>You have no pending requests</p>
+          </div>
         )}
         {!loading && !showNoItems && (
           <Stack spacing={{ xs: 1, sm: 2, md: 4 }}

@@ -9,7 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaPlus, FaShoppingCart } from "react-icons/fa";
 import { FaUsers } from "react-icons/fa";
-import { Badge } from '@mui/material';
+import { Badge, Stack } from '@mui/material';
 import { ShopContext } from './context/shop-context';
 
 const Admindashboard = () => {
@@ -48,7 +48,7 @@ const Admindashboard = () => {
     <div className={`bg-zinc-300 min-h-screen flex flex-col items-center  `} >
       <div className='flex items-center gap-5 w-full justify-center'>
         <h1 className='font-bold text-teal-900 text-[40px] m-6 ' style={{ fontFamily: 'Roboto, sans-serif' }}>ADMIN DASHBOARD</h1>
-        <div className='m-6  h-12 w-12 mt-3 bg-teal-600 hover:bg-teal-800 flex items-center justify-center rounded-[50%]'>
+        <div className='m-6  h-16 w-16 sm:h-[55px] sm:w-[55px] mt-3 bg-teal-600 hover:bg-teal-800 flex items-center justify-center rounded-[50%]'>
           <Badge max={9}
             badgeContent={cart}
             color="error">
@@ -58,20 +58,23 @@ const Admindashboard = () => {
           </Badge>
         </div>
       </div>
-      <div className="flex" style={{ fontFamily: 'Figtree, sans-serif' }}>
-        <button className="bg-teal-600 hover:bg-teal-800 text-white font-bold py-2 px-4 m-4 rounded"
+      <Stack
+        direction={{ xs: 'column', sm: 'row' }}
+        spacing={{ xs: 1, sm: 2, md: 4 }}
+      >
+        <button className="bg-teal-700 hover:bg-teal-800 text-white font-bold py-2 px-4 m-4 rounded justify-center"
           onClick={() => navigate('/adminrequest')}>
           Send request to management
         </button>
-        <button className="flex items-center bg-teal-600 hover:bg-teal-800 text-white font-bold py-2 px-4 m-4 rounded"
+        <button className="flex items-center justify-center bg-teal-700 hover:bg-teal-800 text-white font-bold py-2 px-4 m-4 rounded"
           onClick={() => navigate('/admin/users')}>
-          <FaUsers className='mx-2' />Users
+          <FaUsers className='mx-2 text-lg'  />Users
         </button>
-        <button className="flex items-center bg-teal-600 hover:bg-teal-800 text-white font-bold py-2 px-4 m-4 rounded"
+        <button className="flex items-center bg-teal-700 hover:bg-teal-800 text-white font-bold py-2 px-4 m-4 rounded justify-center"
           onClick={() => navigate('/userrequests')}>
           User Requests
         </button>
-      </div>
+      </Stack>
 
       <div className=' flex flex-col items-center m-6' style={{ fontFamily: 'Figtree, sans-serif' }}>
         <div ref={sidebarRef}>

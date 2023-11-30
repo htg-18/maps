@@ -24,5 +24,5 @@
     {"id": "LNMCHM023", "name": "Air Freshners"},
     {"id": "LNMCHM024", "name": "Wall Calenders"},
     {"id": "LNMCHM025", "name": "Water coolers"},
-    {"id": "LNMCHM026", "name": "Softboard "}
+    {"id": "LNMCHM026", "name": "Softboard"}
 ]
