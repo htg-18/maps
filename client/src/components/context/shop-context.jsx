@@ -78,7 +78,7 @@ const fetchInventory = async () => {
     return total;
   }
 
-   const contextValue={cartItems,addToCart,removeFromCart,deleteFromCart,findTotal,findUnique}
+   const contextValue={cartItems,setCartItems,addToCart,removeFromCart,deleteFromCart,findTotal,findUnique}
   // console.log(JSON.stringify(cartItems))
   console.log(findUnique())
   

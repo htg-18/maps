@@ -64,6 +64,69 @@ router.post('/additemsbymangement', async (req, res) => {
   });
 
 
+// add items by cart management
+router.post('/additemsbymanagementcart', async (req, res) => {
+  const cartItems = req.body;
+
+  try {
+    for (const [itemId, quantity] of Object.entries(cartItems)) {
+      // Find the inventory item with the given ID
+      // const inventoryItem = await Inventory.findOne({ _id: itemId });
+      const inventoryItem = await Inventory.findOne({ _id: itemId });
+     
+      if (inventoryItem) {
+        // Update the inventory item's quantity
+        inventoryItem.itemQuantity += parseInt(quantity, 10);
+        await inventoryItem.save();
+      } else {
+        // Create a new inventory item
+        const newInventoryItem = new Inventory({
+          _id: itemId,
+          itemQuantity: parseInt(quantity, 10),
+        });
+        await newInventoryItem.save();
+      }
+    }
+
+    // Send email notification
+    const items = Object.keys(cartItems).map(async(itemId) => {
+      const inventoryItem = await Inventory.findOne({ _id: itemId });
+      return {
+        itemName: inventoryItem.itemName,
+        quantity: cartItems[itemId],
+      };
+    });
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'kaizokuniorewanaru9@gmail.com',
+        pass: 'hday cele tphe lgbc',
+      },
+    });
+
+    const mailOptions = {
+      from: 'kaizokuniorewanaru9@gmail.com',
+      to: 'hs553608@gmail.com',
+      subject: 'New Inventory Request from Cart',
+      text: `Items:\n${items.map((item) => `${item.itemName}: ${item.quantity}`).join('\n')}`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+
+    res.status(201).json({ success: true, message: 'Inventory items updated successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+});
+
 
 //api request to get all inventory , these items are not associated with any users
 // Route to get all items not associated with any user

@@ -31,6 +31,7 @@ app.use('/',authpath);
 
 //inventorypath have routes of 
 // post - '/additemsbymangement' - add items by management
+// post - '/additemsbymanagementcart' - add items by management but wiht cart system
 // get - '/allinventoryitems'  -Route to get all items not associated with any user
 // post - '/requestforinventory' - api request by user for inventory
 // get -  '/pendingrequestsuser' - get pending requests for a particular user

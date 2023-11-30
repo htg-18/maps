@@ -1,16 +1,46 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { ShopContext } from './context/shop-context';
 import { FaShoppingCart, FaExclamation } from 'react-icons/fa';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Sidebar = () => {
-  const { cartItems, addToCart, removeFromCart, deleteFromCart, findTotal } = useContext(ShopContext);
+  const { cartItems,setCartItems, addToCart, removeFromCart, deleteFromCart, findTotal } = useContext(ShopContext);
   const [inventory, setInventory] = useState([]);
   const [empty, setEmpty] = useState(findTotal());
+  
+  const handleCartSubmit = async()=>{
+    console.log(cartItems);
+    try {
+      const response = await fetch('http://localhost:5000/additemsbymanagementcart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(cartItems)
+      });
+  
+      const data = await response.json();
+  
+      if (data.success) {
+        console.log(data.success);
+        toast.success('Success! Management will be notified', { theme: 'light' });
+        // Clear the cart items after successful order submission
+        setCartItems({});
+      } else {
+        console.log(error);
+        toast.error('Error! Not able to process the request', { theme: 'light' });
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Error! Not able to process the request', { theme: 'light' });
+    }
+  }
 
   useEffect(() => {
     // Fetch inventory data when the component mounts
     fetchInventory();
-  }, []);
+  }, [handleCartSubmit,setCartItems]);
 
   useEffect(() => {
     setEmpty(findTotal());
@@ -60,7 +90,7 @@ const Sidebar = () => {
               // Check if the item exists in the cart and has a quantity greater than 0
               if (cartItem && cartItems[cartItem._id] > 0) {
                 return (
-                  <div key={cartItem._id} className="flex flex-col items-center w-[250px] h-[280px] sm:w-[350px] sm:h-[300px] bg-zinc-200 m-3  cursor-pointer p-4 shadow-md rounded-md shadow-xl">
+                  <div key={cartItem._id} className="flex flex-col items-center w-[250px] h-[280px] sm:w-[350px] sm:h-[300px] bg-zinc-200 m-3  cursor-pointer p-4 rounded-md shadow-xl">
                     <h2 className="text-lg font-semibold mb-2">{cartItem.itemName}</h2>
                     <p className="text-gray-600 mb-2">Item ID: {cartItem.itemId.slice(0, 8)}</p>
                     <p className="text-gray-600">Quantity: {cartItem.itemQuantity}</p>
@@ -121,11 +151,10 @@ const Sidebar = () => {
             {/* "Order" button */}
             <button
               className="w-[50%] bg-teal-600 hover:bg-teal-800 text-white font-bold py-2 px-4 rounded mt-4"
-              onClick={() => {
-                // Add functionality to handle the order button click
+               onClick={handleCartSubmit}
+              // Add functionality to handle the order button click
                 // For example, you can redirect to the checkout page
-                console.log('Order button clicked');
-              }}
+               
             >
               Order
             </button>
