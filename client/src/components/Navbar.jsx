@@ -6,7 +6,7 @@ const Navbar = () => {
 
   const navigate = useNavigate();
  
-  const [menuOpen, setMenuOpen] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
     if (localStorage.getItem("token") !== null) {
@@ -57,7 +57,7 @@ const Navbar = () => {
         {(localStorage.getItem("token") !== null || localStorage.getItem("admintoken") !== null) && (
           <li className="px-3 ">
             <button 
-              className=" bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 rounded "
+              className=" bg-red-500 hover:bg-red-700 text-white font-bold px-4 rounded "
               onClick={handleLogout}>
                 Logout
               </button>

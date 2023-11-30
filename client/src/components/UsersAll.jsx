@@ -5,6 +5,7 @@ import { MdEdit } from 'react-icons/md';
 import Modal from './Modal';
 import { CircularProgress, Stack } from "@mui/material";
 import { IoTrashBin } from "react-icons/io5";
+import MySkeleton from './MySkeleton';
 
 const UsersAll = () => {
   const [users, setUsers] = useState([]);
@@ -101,7 +102,7 @@ const UsersAll = () => {
       <div className="w-screen min-h-screen container mx-auto mt-8">
         <h1 className="text-2xl font-bold mb-4 text-center">All Users</h1>
         {loading ? (
-          <CircularProgress />
+          <MySkeleton/>
         ) : showNoItems ? (
           // Display the GIF when there are no filtered items
           <img src={notFound} alt="No items found" className="m-auto p-auto h-[300px] w-[300px] rounded-[10px]" />

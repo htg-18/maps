@@ -7,6 +7,35 @@ import { Badge, CircularProgress, Stack } from "@mui/material";
 import { FaShoppingCart } from "react-icons/fa";
 import Sidebar from './Sidebar.jsx';
 import { ShopContext } from './context/shop-context.jsx';
+import {
+  Chalk,
+  desk,
+  Blackboard,
+  AirConditioner,
+  AirFreshner,
+  Bed,
+  chair,
+  clock,
+  computer,
+  CurtainBlinds,
+  duster,
+  fan,
+  keyboard,
+  Mirror,
+  mouse,
+  projectorscreen,
+  projector,
+  RoomCurtain,
+  Softboard,
+  StudyTable,
+  Towelracks,
+  TrashBin,
+  WallCalender,
+  Watercooler,
+  whiteboarderaser,
+  whiteboardmarker
+} from '../assets/images.js';
+import MySkeleton from './MySkeleton.jsx';
 
 const InventoryList = ({showSidebar,setShowSidebar}) => {
   const [inventory, setInventory] = useState([]);
@@ -62,6 +91,10 @@ const fetchInventory = async () => {
     );
     setShowNoItems(filteredItems.length === 0);
   }, [inventory, input]);
+  function removeSpacesAndSlashes(inputString) {
+    console.log(inputString.replace(/[\s/]/g, ''))
+    return inputString.replace(/[\s/]/g, '');
+   }
 
   return (
     <div>
@@ -78,7 +111,7 @@ const fetchInventory = async () => {
       <div className="w-screen min-h-screen container mx-auto mt-8 ">
         <h1 className="text-2xl font-bold mb-4 text-center">Inventory List</h1>
 
-        {loading && <CircularProgress />}
+        {loading && <MySkeleton/>}
         {!loading && showNoItems && (
           <img src={notFound} alt="No items found" className='m-auto p-auto h-[300px] w-[300px] rounded-[10px]' />
         )}
@@ -98,7 +131,7 @@ const fetchInventory = async () => {
                   <h2 className="text-lg font-semibold mb-2">{item.itemName}</h2>
                   <p className="text-gray-600 mb-2">Item ID: {item.itemId.slice(0, 8)}</p>
                   <p className="text-gray-600">Quantity: {item.itemQuantity}</p>
-                  {/* <img src={item.itemName} alt="noimage"></img> */}
+                  <img src={removeSpacesAndSlashes(item.itemName)} alt={removeSpacesAndSlashes(item.itemName)}/>
                   {cartItems[item._id] == 0 || cartItems[item._id] === undefined ? (
                     <button className='w-[50%] bg-teal-600 hover:bg-teal-800 text-white font-bold py-2 px-4 rounded mt-4 '
                       onClick={() => {

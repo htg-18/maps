@@ -5,6 +5,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { FaSearch } from 'react-icons/fa';
 import notFound from "../assets/not-found-404error.gif";
 import { CircularProgress, Stack } from "@mui/material";
+import MySkeleton from './MySkeleton';
+import { FaExclamation } from 'react-icons/fa6';
+import { useNavigate } from 'react-router-dom';
 
 const PendingInventoryRequests = () => {
   const [inventory, setInventory] = useState([]);
@@ -12,6 +15,7 @@ const PendingInventoryRequests = () => {
   const [input, setInput] = useState('');
   const [showNoItems, setShowNoItems] = useState(false);
   const [loading, setLoading] = useState(true);
+  const navigate=useNavigate()
 
   useEffect(() => {
     // Fetch inventory data when the component mounts
@@ -141,7 +145,10 @@ const PendingInventoryRequests = () => {
   }, [inventory, input]);
 
   return (
-    <div className='bg-zinc-300 pt-10'>
+    <div className='bg-zinc-300 pt-10 flex flex-col'>
+      <button onClick={()=>{navigate(-1)}} className='m-auto bg-zinc-500 hover:bg-zinc-700 text-white font-bold py-2 px-4 rounded mt-4 mb-6'>
+        Admin Dashboard
+      </button>
       <div className='bg-white flex items-center justify-center w-full max-w-md rounded-[12px] p-2 m-auto'>
         <FaSearch style={{ color: 'teal', fontSize: 20 }} />
         <input
@@ -154,10 +161,15 @@ const PendingInventoryRequests = () => {
 
       <div className=" w-screen min-h-screen container mx-auto mt-8 ">
         <h1 className="text-2xl font-bold mb-4 text-center">Requests List</h1>
-        {loading && <CircularProgress />}
+        {loading && <MySkeleton/>}
         {!loading && showNoItems && (
           // Display the GIF when there are no filtered items
-          <img src={notFound} alt="No items found" className='m-auto p-auto h-[300px] w-[300px] rounded-[10px]'/>
+          <div className='m-auto'>
+            <div className='h-36 w-36 rounded-full bg-red-400 flex items-center justify-center m-auto'>
+              <FaExclamation className='text-[100px] text-white' />
+            </div>
+            <p className='text-xl text-zinc-500 pt-5 text-center'>No new requests</p>
+          </div>
         )}
         {!loading && !showNoItems && (
           <Stack spacing={{ xs: 1, sm: 2, md: 4 }}
@@ -178,14 +190,14 @@ const PendingInventoryRequests = () => {
                   <p className="text-gray-600">Quantity: {item.itemQuantity}</p>
                   <div className="flex">
                      <button 
-                        className="w-[35%] bg-blue-500 hover:bg-blue-900 text-white font-bold py-1 px-2 m-4 rounded focus:outline-none focus:shadow-outline"
+                        className="w-[35%] bg-teal-600 hover:bg-teal-800 text-white font-bold py-1 px-2 m-4 rounded focus:outline-none focus:shadow-outline"
                          onClick={() => handleApproveRequest(item._id)}
                      >  
                         Approve
                      </button>
                     
                      <button 
-                      className="w-[35%] bg-red-500 hover:bg-red-900 text-white font-bold py-1 px-2 m-4 rounded focus:outline-none focus:shadow-outline"
+                      className="w-[35%] bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 m-4 rounded focus:outline-none focus:shadow-outline"
                       onClick={() => handleRejectRequest(item._id)}
                       >
                         Reject

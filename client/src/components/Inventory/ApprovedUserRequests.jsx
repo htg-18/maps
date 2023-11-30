@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { FaSearch } from 'react-icons/fa';
 import notFound from "../../assets/not-found-404error.gif";
 import { CircularProgress, Stack } from "@mui/material";
+import MySkeleton from '../MySkeleton';
 
 const ApprovedUserRequests = () => {
   const [inventory, setInventory] = useState([]);
@@ -66,8 +67,8 @@ const ApprovedUserRequests = () => {
       </div>
 
       <div className=" w-screen min-h-screen container mx-auto mt-8 ">
-        <h1 className="text-2xl font-bold mb-4 text-center text-blue-600">My Inventory List</h1>
-        {loading && <CircularProgress />}
+        <h1 className="text-2xl font-bold mb-4 text-center text-black">My Inventory List</h1>
+        {loading && <MySkeleton/>}
         {!loading && showNoItems && (
           // Display the GIF when there are no filtered items
           <img src={notFound} alt="No items found" className='m-auto p-auto h-[300px] w-[300px] rounded-[10px]'/>
