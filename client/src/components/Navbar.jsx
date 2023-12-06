@@ -5,9 +5,10 @@ import logo from "../assets/logo.png";
 const Navbar = () => {
 
   const navigate = useNavigate();
+
  
   const [menuOpen, setMenuOpen] = useState(false);
-
+  let path;
   const handleLogout = () => {
     if (localStorage.getItem("token") !== null) {
       localStorage.removeItem("token");
@@ -17,14 +18,20 @@ const Navbar = () => {
     navigate("/home");
     setIsLoggedIn(false);
   };
-
+  if(localStorage.getItem("token") !== null){
+    path="/userdashboard"
+  }else if(localStorage.getItem("admintoken") !== null){
+    path="/admindashboard"
+  }else{
+    path="/"
+  }
 
   return (
     <nav
-      className="min-h-[70px] flex justify-between items-center bg-teal-900 sticky top-0"
+      className="min-h-[70px] min-w-screen flex justify-between items-center bg-teal-900 sticky top-0"
       style={{ fontFamily: "Roboto, sans-serif", zIndex: "100" }}
     >
-      <Link to="/" className="text-white text-3xl font-extrabold">
+      <Link to={`${path}`} className="text-white text-3xl font-extrabold">
         <img src={logo} alt="LOGO" className="h-14 w-60" />
       </Link>
 

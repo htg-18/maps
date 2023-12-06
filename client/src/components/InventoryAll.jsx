@@ -7,46 +7,31 @@ import { Badge, CircularProgress, Stack } from "@mui/material";
 import { FaShoppingCart } from "react-icons/fa";
 import Sidebar from './Sidebar.jsx';
 import { ShopContext } from './context/shop-context.jsx';
-import {
-  Chalk,
-  desk,
-  Blackboard,
-  AirConditioner,
-  AirFreshner,
-  Bed,
-  chair,
-  clock,
-  computer,
-  CurtainBlinds,
-  duster,
-  fan,
-  keyboard,
-  Mirror,
-  mouse,
-  projectorscreen,
-  projector,
-  RoomCurtain,
-  Softboard,
-  StudyTable,
-  Towelracks,
-  TrashBin,
-  WallCalender,
-  Watercooler,
-  whiteboarderaser,
-  whiteboardmarker
-} from '../assets/images.js';
 import MySkeleton from './MySkeleton.jsx';
 
-const InventoryList = ({showSidebar,setShowSidebar}) => {
+const InventoryList = ({ showSidebar, setShowSidebar }) => {
   const [inventory, setInventory] = useState([]);
   const [result, setResult] = useState([]);
   const [input, setInput] = useState('');
   const [showNoItems, setShowNoItems] = useState(false);
   const [loading, setLoading] = useState(true);
-  const { cartItems, addToCart, removeFromCart, deleteFromCart, findTotal } = useContext(ShopContext);
+  const { cartItems, addToCart, removeFromCart, deleteFromCart, findTotal ,addMultiple} = useContext(ShopContext);
   const sidebarRef = useRef(null);
-
   useEffect(() => {
+    const storedCartItems = localStorage.getItem('cartItems');
+    if (storedCartItems && storedCartItems!==JSON.stringify(cartItems)) {
+      try {
+        const parsedCartItems = JSON.parse(storedCartItems);
+        console.log(parsedCartItems);
+        if (typeof parsedCartItems === 'object' && parsedCartItems !== null) {
+          Object.entries(parsedCartItems).forEach(([itemId, quantity]) => {
+            addMultiple(itemId, quantity);
+          });
+        }
+      } catch (error) {
+        console.error('Error parsing cart items:', error.message);
+      }
+    }
     fetchInventory();
   }, []);
 
@@ -62,7 +47,27 @@ const InventoryList = ({showSidebar,setShowSidebar}) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-const fetchInventory = async () => {
+
+  useEffect(() => {
+    const filteredItems = inventory.filter((items) =>
+      items.itemName.toLowerCase().includes(input.toLowerCase())
+    );
+    setShowNoItems(filteredItems.length === 0);
+  }, [inventory, input]);
+
+  useEffect(() => {
+    // Save cartItems to local storage whenever it changes
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  }, [cartItems]);
+  useEffect(()=>{
+
+    if(cartItems.length===0){
+      window.location.reload()
+    }
+
+  },[cartItems]);
+
+  const fetchInventory = async () => {
     try {
       const response = await fetch('http://localhost:5000/allinventoryitems', {
         method: 'GET',
@@ -85,17 +90,10 @@ const fetchInventory = async () => {
     setInput(value);
   };
 
-  useEffect(() => {
-    const filteredItems = inventory.filter((items) =>
-      items.itemName.toLowerCase().includes(input.toLowerCase())
-    );
-    setShowNoItems(filteredItems.length === 0);
-  }, [inventory, input]);
   function removeSpacesAndSlashes(inputString) {
-    console.log(inputString.replace(/[\s/]/g, ''))
     return inputString.replace(/[\s/]/g, '');
-   }
-
+  }
+  
   return (
     <div>
       <div className='bg-white flex items-center justify-center w-full max-w-md rounded-[12px] p-2 m-auto'>
@@ -131,7 +129,6 @@ const fetchInventory = async () => {
                   <h2 className="text-lg font-semibold mb-2">{item.itemName}</h2>
                   <p className="text-gray-600 mb-2">Item ID: {item.itemId.slice(0, 8)}</p>
                   <p className="text-gray-600">Quantity: {item.itemQuantity}</p>
-                  <img src={removeSpacesAndSlashes(item.itemName)} alt={removeSpacesAndSlashes(item.itemName)}/>
                   {cartItems[item._id] == 0 || cartItems[item._id] === undefined ? (
                     <button className='w-[50%] bg-teal-600 hover:bg-teal-800 text-white font-bold py-2 px-4 rounded mt-4 '
                       onClick={() => {
@@ -193,3 +190,4 @@ const fetchInventory = async () => {
 };
 
 export default InventoryList;
+

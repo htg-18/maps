@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import InventoryList from './InventoryAll';
@@ -16,10 +14,17 @@ const Admindashboard = () => {
   const navigate = useNavigate();
   const [showSidebar, setShowSidebar] = useState(false);
   const sidebarRef = useRef(null);
-  
-  const { cartItems, addToCart, removeFromCart, deleteFromCart, findTotal,findUnique } = useContext(ShopContext);
+  const { cartItems, addToCart, removeFromCart, deleteFromCart, findTotal,findUnique ,addMultiple} = useContext(ShopContext);
   const [cart,setCart]=useState(findUnique())
+
   useEffect(() => {
+    // const storedCartItems = localStorage.getItem('cartItems');
+    // if (storedCartItems) {
+    //   const parsedCartItems = JSON.parse(storedCartItems);
+    //   Object.entries(parsedCartItems).forEach(([itemId, quantity]) => {
+    //     addMultiple(itemId, quantity);
+    //   });
+    // }
     toast.dismiss();
   }, []);
 
@@ -81,7 +86,6 @@ const Admindashboard = () => {
           <InventoryList showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
         </div>
       </div>
-      {/* <Footer/> */}
     </div>
   );
 };
