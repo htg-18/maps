@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { FaSearch } from 'react-icons/fa';
+import { FaExclamation, FaSearch } from 'react-icons/fa';
 import notFound from "../assets/not-found-404error.gif";
 import { Badge, CircularProgress, Stack } from "@mui/material";
 import { FaShoppingCart } from "react-icons/fa";
