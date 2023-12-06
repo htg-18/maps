@@ -78,10 +78,17 @@ const fetchInventory = async () => {
     return total;
   }
 
-   const contextValue={cartItems,setCartItems,addToCart,removeFromCart,deleteFromCart,findTotal,findUnique}
+  const addMultiple=(itemId,quantity)=>{
+    setCartItems((prev) => ({
+      ...prev,
+      [itemId]: parseInt(prev[itemId], 10) + quantity || quantity,
+    }));
+  }
+
+   const contextValue={cartItems,setCartItems,addToCart,removeFromCart,deleteFromCart,findTotal,findUnique,addMultiple}
   // console.log(JSON.stringify(cartItems))
-  console.log(findUnique())
-  
+  // console.log(findUnique())
+
   return(
     <ShopContext.Provider value={contextValue}>
       {props.children}

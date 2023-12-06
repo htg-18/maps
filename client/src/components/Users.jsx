@@ -6,6 +6,7 @@ import { Stack } from '@mui/material';
 
 const Users = () => {
   const navigate = useNavigate();
+  console.log(localStorage.getItem('cartItems'))
 
   return (
     <div className='bg-zinc-300 min-h-screen min-w-screen flex flex-col items-center' style={{fontFamily: 'Figtree, sans-serif'}}> 

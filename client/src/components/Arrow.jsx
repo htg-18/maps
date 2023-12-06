@@ -21,8 +21,8 @@ const Arrow = () => {
   return (
     <div className=''>
     { backToTop &&
-        <button className='h-16 w-16 opacity-80 rounded-full bg-zinc-200 hover:opacity-100 flex items-center justify-center bottom-[30px] right-[45%] fixed text-3xl ' onClick={scrollUp}>
-        <FaArrowUp className='text-4xl text-teal-600'/>
+        <button className='h-12 w-12 opacity-80 rounded-full bg-zinc-200 hover:opacity-100 flex items-center justify-center bottom-[30px] right-[50px] fixed text-3xl ' onClick={scrollUp}>
+        <FaArrowUp className='text-2xl text-teal-600'/>
         </button>
     }
     </div>
