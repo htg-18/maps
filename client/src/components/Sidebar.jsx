@@ -9,13 +9,13 @@ const Sidebar = () => {
   const [inventory, setInventory] = useState([]);
   const [empty, setEmpty] = useState(findTotal());
   
-  const handleCartSubmit = async()=>{
+  const handleCartSubmitAdmin = async()=>{
     console.log(cartItems);
     try {
       const response = await fetch('http://localhost:5000/additemsbymanagementcart', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(cartItems)
       });
@@ -36,11 +36,45 @@ const Sidebar = () => {
       toast.error('Error! Not able to process the request', { theme: 'light' });
     }
   }
+  
+  
+ const handleCartSubmitUser = async()=>{
+    console.log(cartItems);
+      // console.log("user case");
+    try {
+      const response = await fetch('http://localhost:5000/additemsbyusercart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'token': localStorage.getItem('token')
+        },
+        body: JSON.stringify(cartItems)
+      });
+  
+      // const data = await response.json();
+      const data =  await response.json();
+  
+      if (data.success) {
+        console.log(data.success);
+        toast.success('Request sent to admin', { theme: 'light' });
+        // Clear the cart items after successful order submission
+        setCartItems({});
+      } else {
+        console.log(error);
+        toast.error('Error! Not able to process the request', { theme: 'light' });
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Error! Not able to process the request', { theme: 'light' });
+    }
+ }
 
+
+  
   useEffect(() => {
     // Fetch inventory data when the component mounts
     fetchInventory();
-  }, [handleCartSubmit,setCartItems]);
+  }, [setCartItems]);
 
   useEffect(() => {
     setEmpty(findTotal());
@@ -151,7 +185,7 @@ const Sidebar = () => {
             {/* "Order" button */}
             <button
               className="w-[50%] bg-teal-600 hover:bg-teal-800 text-white font-bold py-2 px-4 rounded mt-4"
-               onClick={handleCartSubmit}
+               onClick={localStorage.getItem('admintoken')!==null ? handleCartSubmitAdmin : handleCartSubmitUser}
               // Add functionality to handle the order button click
                 // For example, you can redirect to the checkout page
                

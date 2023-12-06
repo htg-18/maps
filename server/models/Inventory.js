@@ -8,8 +8,8 @@ const inventorySchema = new mongoose.Schema({
   },
   itemId: {
     type: String,
-    required: true,
-    unique: true,
+    // required: true,
+    // unique: true,
   },
   itemQuantity: {
     type: Number,

@@ -6,6 +6,7 @@ const Inventory = require('../models/Inventory');
 const uuid = require('uuid');
 const nodemailer = require('nodemailer');
 const fetchuser = require("../middleware/Fetchusers");
+const fetchuserUsers = require("../middleware/FetchusersUser");
 
 //adding inventory to db after filling form of request to management
 // Route to add items to the inventory
@@ -64,6 +65,43 @@ router.post('/additemsbymangement', async (req, res) => {
   });
 
 
+// request for items by cart user
+router.post('/additemsbyusercart', fetchuserUsers, async (req, res, next) => {
+  const cartItems = req.body;
+  const userId = req.user._id;
+
+  try {
+    const inventoryRequests = [];
+
+    for (const [itemId, quantity] of Object.entries(cartItems)) {
+      const inventoryItem = await Inventory.findOne({ _id: itemId });
+        console.log(inventoryItem);
+      const inventoryRequest = new Inventory({
+        itemName: inventoryItem.itemName,
+        // itemId: inventoryItem.itemId,
+        itemId: uuid.v4(),
+        itemQuantity: parseInt(quantity, 10),
+        user: userId,
+        requestStatus: 'pending',
+        requestedByUser: userId,
+        createdAt: Date.now(),
+      });
+
+      inventoryRequests.push(inventoryRequest);
+    }
+
+    await Promise.all(inventoryRequests.map((request) => request.save()));
+
+    res.status(201).json({ success: true, message: 'Inventory items requested successfully' });
+  } catch (error) {
+    console.error(error);
+    next(error); // Pass the error to the error handler
+  }
+});
+
+
+
+
 // add items by cart management
 router.post('/additemsbymanagementcart', async (req, res) => {
   const cartItems = req.body;
@@ -113,14 +151,14 @@ router.post('/additemsbymanagementcart', async (req, res) => {
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
+    if (error) {
         console.error(error);
       } else {
         console.log('Email sent: ' + info.response);
       }
     });
 
-    res.status(201).json({ success: true, message: 'Inventory items updated successfully' });
+    res.status(201).json({ success: true, message: 'Inventory items requested from management successfully' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: 'Internal Server Error' });

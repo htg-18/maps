@@ -40,8 +40,8 @@ app.use('/',authpath);
 // put -  '/handlerequests/:requestId' - approve and reject inventory requests by admin
 // get -  '/allpendingrequests' - get all pending requests for admin
 // get  -  '/allrejectedrequests' - get all rejected requests for admin
-// get  - '//allapprovedrequests' - get all approved requests for admin
-
+// get  - '/allapprovedrequests' - get all approved requests for admin
+// post -  '/additemsbyusercart' - request for inventory by user but with cart system
 app.use('/',inventorypath);
 
 app.listen(port,()=>{
