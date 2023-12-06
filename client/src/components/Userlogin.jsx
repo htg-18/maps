@@ -28,7 +28,7 @@ const UserLogin = () => {
    const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch("http://localhost:5000/userlogin", {
+    const response = await fetch(`${import.meta.env.VITE_REACT_API_HOST_URL}/userlogin`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

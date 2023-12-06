@@ -12,7 +12,7 @@ const Sidebar = () => {
   const handleCartSubmitAdmin = async()=>{
     console.log(cartItems);
     try {
-      const response = await fetch('http://localhost:5000/additemsbymanagementcart', {
+      const response = await fetch(`${import.meta.env.VITE_REACT_API_HOST_URL}/additemsbymanagementcart`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -42,7 +42,7 @@ const Sidebar = () => {
     console.log(cartItems);
       // console.log("user case");
     try {
-      const response = await fetch('http://localhost:5000/additemsbyusercart', {
+      const response = await fetch(`${import.meta.env.VITE_REACT_API_HOST_URL}/additemsbyusercart`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ const Sidebar = () => {
 
   const fetchInventory = async () => {
     try {
-      const response = await fetch('http://localhost:5000/allinventoryitems', {
+      const response = await fetch(`${import.meta.env.VITE_REACT_API_HOST_URL}/allinventoryitems`, {
         method: 'GET',
       });
       const data = await response.json();

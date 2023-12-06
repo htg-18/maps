@@ -46,7 +46,7 @@ const Adminrequest = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/additemsbymangement', {
+      const response = await fetch(`${import.meta.env.VITE_REACT_API_HOST_URL}/additemsbymangement`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
