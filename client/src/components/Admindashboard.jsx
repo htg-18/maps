@@ -71,6 +71,10 @@ const Admindashboard = () => {
           onClick={() => navigate('/adminrequest')}>
           Send request to management
         </button>
+        <button className="bg-teal-700 hover:bg-teal-800 text-white font-bold py-2 px-4 m-4 rounded justify-center"
+          onClick={() => navigate('/newitementries')}>
+           Item Entries
+        </button>
         <button className="flex items-center justify-center bg-teal-700 hover:bg-teal-800 text-white font-bold py-2 px-4 m-4 rounded"
           onClick={() => navigate('/admin/users')}>
           <FaUsers className='mx-2 text-lg'  />Users

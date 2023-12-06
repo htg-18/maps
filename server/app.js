@@ -2,7 +2,6 @@ const connectToMongo= require('./db');
 const express = require('express');
 const cors = require('cors');
 
-
 const bodyParser = require('body-parser');
 const authpath = require('./routes/auth');
 const inventorypath = require('./routes/inventory');
@@ -32,6 +31,7 @@ app.use('/',authpath);
 //inventorypath have routes of 
 // post - '/additemsbymangement' - add items by management
 // post - '/additemsbymanagementcart' - add items by management but wiht cart system
+// post - '/newitementries' - add items by new item entries by admin
 // get - '/allinventoryitems'  -Route to get all items not associated with any user
 // post - '/requestforinventory' - api request by user for inventory
 // get -  '/pendingrequestsuser' - get pending requests for a particular user

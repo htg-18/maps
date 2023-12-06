@@ -166,6 +166,39 @@ router.post('/additemsbymanagementcart', async (req, res) => {
 });
 
 
+// new item entries by admin
+router.post('/newitementries', async (req, res) => {
+  const { itemName, itemQuantity,description} = req.body;
+  
+  try {
+     // Check if an inventory item with the given name already exists who is genreal not under any user
+     const inventoryItem = await Inventory.findOne({ itemName, user: null });
+
+     if (inventoryItem) {
+         // If the item exists, update its quantity
+         inventoryItem.itemQuantity += parseInt(itemQuantity, 10);
+      } else {
+         // If the item doesn't exist, create a new inventory item
+         const itemId = uuid.v4();
+         inventoryItem = new Inventory({
+             itemName,
+             itemId,
+             itemQuantity: parseInt(itemQuantity, 10),
+         });
+     }
+
+    // Save the inventory item
+    await inventoryItem.save();
+   
+     
+    res.status(201).json({ success: true, data: inventoryItem });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+});
+
+
 //api request to get all inventory , these items are not associated with any users
 // Route to get all items not associated with any user
 router.get('/allinventoryitems', async (req, res) => {
@@ -283,22 +316,29 @@ router.put('/handlerequests/:requestId', async (req, res) => {
       if (action === 'approve') {
         // find if inventory already exists for this request,
         const existingInventoryItem = await Inventory.findOne({ itemName: inventoryItem.itemName, user: inventoryItem.user,requestStatus:"approved" });
-        console.log(inventoryItem.user);
+
+        const admininventory = await Inventory.findOne({ itemName: inventoryItem.itemName, user: null });
+        console.log(admininventory);
         if (existingInventoryItem) {
           existingInventoryItem.itemQuantity += parseInt(inventoryItem.itemQuantity,10);
+          admininventory.itemQuantity -= parseInt(inventoryItem.itemQuantity, 10);
            console.log('existing');
           inventoryItem.requestStatus = 'discard';
           await existingInventoryItem.save();
+          await admininventory.save();
           await removeApprovedRequest(requestId);  // calling function to Delete the approved request since the item is already in inventory
         } else {
           inventoryItem.requestStatus = 'approved';
+          admininventory.itemQuantity -= parseInt(inventoryItem.itemQuantity, 10);
+          await admininventory.save();
         }
       } else if (action === 'reject') {
         inventoryItem.requestStatus = 'rejected';
       } else {
         return res.status(400).json({ message: 'Invalid action' });
       }
-  
+      
+     
       await inventoryItem.save();
   
       res.status(200).json({ success: true, message: 'Inventory request updated successfully' });

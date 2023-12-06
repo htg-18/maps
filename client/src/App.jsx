@@ -25,6 +25,7 @@ import ProtectedRouteUser from './components/ProtectedRouteUser';
 import ProtectedRouteAdmin from './components/ProtectedRoutsAdmin';
 import { ShopContextProvider } from './components/context/shop-context';
 import Arrow from './components/Arrow';
+import NewItemEntries from './components/Inventory/NewItemEntries';
 
 function App() {
   return (
@@ -68,6 +69,7 @@ function AppContent() {
           <Route path="/createNewUser" element={<CreateNewUser />} />
           <Route path="/userrequests" element={<PendingInventoryRequests />} />
           <Route path="/admin/users" element={<Users />} />
+          <Route path="/newitementries" element={<NewItemEntries />} />
         </Route>
 
         <Route path="*" element={<Home />} />
