@@ -24,7 +24,7 @@ const PendingInventoryRequests = () => {
 
   const fetchInventory = async () => {
     try {
-      const response = await fetch('http://localhost:5000/allpendingrequests', {
+      const response = await fetch(`${import.meta.env.VITE_REACT_API_HOST_URL}/allpendingrequests`, {
         method: 'GET',
       });
       const data = await response.json();
@@ -48,7 +48,7 @@ const PendingInventoryRequests = () => {
   
   const getUser = async (userId) => {
     try {
-      const response = await fetch(`http://localhost:5000/getuser/${userId}`, {
+      const response = await fetch(`${import.meta.env.VITE_REACT_API_HOST_URL}/getuser/${userId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ const PendingInventoryRequests = () => {
   
   const handleApproveRequest = async (requestId) => {
     try {
-      const response = await fetch(`http://localhost:5000/handlerequests/${requestId}`, {
+      const response = await fetch(`${import.meta.env.VITE_REACT_API_HOST_URL}/handlerequests/${requestId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -107,7 +107,7 @@ const PendingInventoryRequests = () => {
 
   const handleRejectRequest = async (requestId) => {
     try {
-      const response = await fetch(`http://localhost:5000/handlerequests/${requestId}`, {
+      const response = await fetch(`${import.meta.env.VITE_REACT_API_HOST_URL}/handlerequests/${requestId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { FaSearch } from 'react-icons/fa';
+import { FaExclamation, FaSearch } from 'react-icons/fa';
 import notFound from "../assets/not-found-404error.gif";
 import { Badge, CircularProgress, Stack } from "@mui/material";
 import { FaShoppingCart } from "react-icons/fa";
@@ -69,7 +69,7 @@ const InventoryList = ({ showSidebar, setShowSidebar }) => {
 
   const fetchInventory = async () => {
     try {
-      const response = await fetch('http://localhost:5000/allinventoryitems', {
+      const response = await fetch(`${import.meta.env.VITE_REACT_API_HOST_URL}/allinventoryitems`, {
         method: 'GET',
       });
       const data = await response.json();
@@ -111,7 +111,12 @@ const InventoryList = ({ showSidebar, setShowSidebar }) => {
 
         {loading && <MySkeleton/>}
         {!loading && showNoItems && (
-          <img src={notFound} alt="No items found" className='m-auto p-auto h-[300px] w-[300px] rounded-[10px]' />
+          <div className='m-auto'>
+            <div className='h-36 w-36 rounded-full bg-red-400 flex items-center justify-center m-auto'>
+              <FaExclamation className='text-[100px] text-white' />
+            </div>
+            <p className='text-xl text-zinc-500 pt-5'>Your cart is currently empty</p>
+          </div>
         )}
         {!loading && !showNoItems && (
           <Stack spacing={{ xs: 1, sm: 2, md: 4 }}
@@ -125,7 +130,7 @@ const InventoryList = ({ showSidebar, setShowSidebar }) => {
             {inventory
               .filter((item) => item.itemName.toLowerCase().includes(input.toLowerCase()))
               .map((item) => (
-                <div key={item._id} className="flex flex-col items-center w-[350px] h-[300px] bg-white hover:bg-zinc-200 cursor-pointer p-4 shadow-md rounded-md ">
+                <div key={item._id} className="flex flex-col items-center w-[350px] h-[270px] bg-white hover:bg-zinc-200 cursor-pointer p-4 shadow-md rounded-md justify-center">
                   <h2 className="text-lg font-semibold mb-2">{item.itemName}</h2>
                   <p className="text-gray-600 mb-2">Item ID: {item.itemId.slice(0, 8)}</p>
                   <p className="text-gray-600">Quantity: {item.itemQuantity}</p>

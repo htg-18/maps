@@ -21,7 +21,7 @@ const PendingUserRequests = () => {
 
   const fetchInventory = async () => {
     try {
-      const response = await fetch('http://localhost:5000/pendingrequestsuser', {
+      const response = await fetch(`${import.meta.env.VITE_REACT_API_HOST_URL}/pendingrequestsuser`, {
         method: 'GET',
         headers:{
            'auth-token':localStorage.getItem('token')

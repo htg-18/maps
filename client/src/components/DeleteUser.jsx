@@ -14,7 +14,7 @@ const DeleteUser = ({ user, setModalVisible ,setRefresh}) => {
 
     try {
       // Make a DELETE request to the '/deleteuser/:username' endpoint
-      const response = await fetch(`http://localhost:5000/deleteuser/${user.username}`, {
+      const response = await fetch(`${import.meta.env.VITE_REACT_API_HOST_URL}/deleteuser/${user.username}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

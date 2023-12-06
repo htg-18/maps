@@ -25,7 +25,7 @@ useEffect(() => {
 
 const fetchInventory = async () => {
   try {
-    const response = await fetch('http://localhost:5000/allinventoryitems', {
+    const response = await fetch(`${import.meta.env.VITE_REACT_API_HOST_URL}/allinventoryitems`, {
       method: 'GET',
     });
     const data = await response.json();

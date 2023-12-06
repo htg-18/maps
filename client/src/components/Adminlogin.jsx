@@ -29,7 +29,7 @@ const AdminLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch('http://localhost:5000/adminlogin', {
+    const response = await fetch(`${import.meta.env.VITE_REACT_API_HOST_URL}/adminlogin`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

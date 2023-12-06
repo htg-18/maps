@@ -49,7 +49,7 @@ const UserRequestForInvetory = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/requestforinventory', {
+      const response = await fetch(`${import.meta.env.VITE_REACT_API_HOST_URL}/requestforinventory`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

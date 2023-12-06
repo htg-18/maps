@@ -34,11 +34,12 @@ const EditUser = ({ setModalVisible, user, setRefresh }) => {
   };
 
   const handleSubmit = async (e) => {
+    console.log()
     e.preventDefault();
     setModalVisible(false);
 
     try {
-      const response = await fetch(`http://localhost:5000/edituser/${user.username}`, {
+      const response = await fetch(`${import.meta.env.VITE_REACT_API_HOST_URL}/edituser/${user.username}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
