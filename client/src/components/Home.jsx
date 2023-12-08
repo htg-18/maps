@@ -26,7 +26,7 @@ const Home = () => {
 
     <figure className="bg-slate-100 rounded-xl p-8 dark:bg-white w-[50%]">
   <img className="w-50 h-25 rounded-[12px] mx-auto" src={lnmiit} alt="" width="384" height="512" />
-  <div className="pt-6 text-center space-y-4">
+  {/* <div className="pt-6 text-center space-y-4">
     <blockquote>
       <p className="text-lg font-medium">
       Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah 
@@ -40,7 +40,7 @@ const Home = () => {
         Staff Engineer, Google
       </div>
     </figcaption>
-  </div>
+  </div> */}
 </figure>
       {/* <div className=''>
        

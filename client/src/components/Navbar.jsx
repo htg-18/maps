@@ -16,7 +16,7 @@ const Navbar = () => {
       localStorage.removeItem("admintoken");
     }
     navigate("/home");
-    setIsLoggedIn(false);
+    // setIsLoggedIn(false);
   };
   if(localStorage.getItem("token") !== null){
     path="/userdashboard"

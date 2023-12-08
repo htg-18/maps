@@ -8,6 +8,7 @@ import logo from '../assets/logo.png';
 import { FaUser } from 'react-icons/fa';
 import { RiLockPasswordFill } from 'react-icons/ri';
 import Navbar from './Navbar'; // Import your Navbar component
+import lnmiit from "../assets/LNMIITVIEW.jpg";
 
 const AdminLogin = () => {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
@@ -77,14 +78,16 @@ const AdminLogin = () => {
   return (
     <div className={`flex ${windowWidth < 1200 ? 'flex-col' : 'flex-row'} min-h-screen items-center justify-center bg-zinc-300`}>
       {windowWidth >= 1200 ? (
-        <div className="flex-1 bg-teal-900 h-screen flex items-center justify-center" style={{ transform: 'skewX(-10deg)', transformOrigin: 'top' }}>
-          <div className="flex flex-col items-center justify-center" style={{ cursor: 'pointer' }}>
-            <img src={logo} className="w-4/2 sm:w-4/3 md:w-4/4 lg:w-4/5 mb-16" alt="Logo" />
-            <h1 className="text-3xl" style={{ color: 'white',fontFamily: 'Poppins, sans-serif' }}>
-              Inventory Management
-            </h1>
-          </div>
-        </div>
+         
+            <div className="flex-1 bg-teal-900 h-screen flex items-center justify-center" style={{ transform: 'skewX(-10deg)', transformOrigin: 'top' }}>
+              <div className="flex flex-col items-center justify-center" style={{ cursor: 'pointer' }}>
+                <img src={lnmiit} className=" mb-16" alt="Logo" />
+                <h1 className="text-3xl" style={{ color: 'white',fontFamily: 'Poppins, sans-serif' }}>
+                  Inventory Management
+                </h1>
+              </div>
+            </div>
+          
       ) : (
         <Navbar />
       )}

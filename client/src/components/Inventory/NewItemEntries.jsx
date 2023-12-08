@@ -64,7 +64,7 @@ const NewItemEntries = () => {
 
       if (data.success) {
         console.log(data.success);
-        toast.success('Success! Management will be notified', { theme: 'light' });
+        toast.success('New Items added successfully!', { theme: 'light' });
         setFormData({
           item: '',
           quantity: '',

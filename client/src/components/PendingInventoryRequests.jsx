@@ -94,9 +94,9 @@ const PendingInventoryRequests = () => {
         },1000 );
         
       } else {
-        console.error('Error approving request');
-        toast.error('Error! Not able to approve the request', { theme: 'light' });
-   
+        // Display the error message from the API response
+        const errorMessage = data.message || 'Error approving request';
+        toast.error(errorMessage, { theme: 'light' });
       }
     } catch (error) {
       console.error(error);
@@ -104,6 +104,8 @@ const PendingInventoryRequests = () => {
    
     }
   };
+
+
 
   const handleRejectRequest = async (requestId) => {
     try {

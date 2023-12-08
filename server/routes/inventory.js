@@ -301,44 +301,89 @@ async function removeApprovedRequest(requestId) {
 }
 
 // approve and reject inventory requests by admin
-router.put('/handlerequests/:requestId', async (req, res) => {
+// router.put('/handlerequests/:requestId', async (req, res) => {
+//     try {
+//       const requestId = req.params.requestId;
+//       const action = req.body.action; // 'approve' or 'reject'
+  
+//       // const inventoryItem = await Inventory.findById(requestId);
+//       const inventoryItem = await Inventory.findOne({ _id: requestId });
+
+//       if (!inventoryItem) {
+//         return res.status(404).json({ message: 'Inventory request not found' });
+//       }
+    
+//       if (action === 'approve') {
+//         // find if inventory already exists for this request,
+//         const existingInventoryItem = await Inventory.findOne({ itemName: inventoryItem.itemName, user: inventoryItem.user,requestStatus:"approved" });
+
+//         const admininventory = await Inventory.findOne({ itemName: inventoryItem.itemName, user: null });
+//         console.log(admininventory);
+//         if (existingInventoryItem) {
+//           existingInventoryItem.itemQuantity += parseInt(inventoryItem.itemQuantity,10);
+//           admininventory.itemQuantity -= parseInt(inventoryItem.itemQuantity, 10);
+//            console.log('existing');
+//           inventoryItem.requestStatus = 'discard';
+//           await existingInventoryItem.save();
+//           await admininventory.save();
+//           await removeApprovedRequest(requestId);  // calling function to Delete the approved request since the item is already in inventory
+//         } else {
+//           inventoryItem.requestStatus = 'approved';
+//           admininventory.itemQuantity -= parseInt(inventoryItem.itemQuantity, 10);
+//           await admininventory.save();
+//         }
+//       } else if (action === 'reject') {
+//         inventoryItem.requestStatus = 'rejected';
+//       } else {
+//         return res.status(400).json({ message: 'Invalid action' });
+//       }
+      
+     
+  //     await inventoryItem.save();
+  
+  //     res.status(200).json({ success: true, message: 'Inventory request updated successfully' });
+  //   } catch (error) {
+  //     console.error(error);
+  //     res.status(500).json({ success: false, message: 'Internal Server Error' });
+  //   }
+  // });
+  
+
+  router.put('/handlerequests/:requestId', async (req, res) => {
     try {
       const requestId = req.params.requestId;
       const action = req.body.action; // 'approve' or 'reject'
   
-      // const inventoryItem = await Inventory.findById(requestId);
       const inventoryItem = await Inventory.findOne({ _id: requestId });
-
+  
       if (!inventoryItem) {
         return res.status(404).json({ message: 'Inventory request not found' });
       }
-    
+  
       if (action === 'approve') {
-        // find if inventory already exists for this request,
-        const existingInventoryItem = await Inventory.findOne({ itemName: inventoryItem.itemName, user: inventoryItem.user,requestStatus:"approved" });
-
-        const admininventory = await Inventory.findOne({ itemName: inventoryItem.itemName, user: null });
-        console.log(admininventory);
-        if (existingInventoryItem) {
-          existingInventoryItem.itemQuantity += parseInt(inventoryItem.itemQuantity,10);
-          admininventory.itemQuantity -= parseInt(inventoryItem.itemQuantity, 10);
-           console.log('existing');
-          inventoryItem.requestStatus = 'discard';
-          await existingInventoryItem.save();
-          await admininventory.save();
-          await removeApprovedRequest(requestId);  // calling function to Delete the approved request since the item is already in inventory
+        const existingInventoryItem = await Inventory.findOne({ itemName: inventoryItem.itemName, user: inventoryItem.user, requestStatus: 'approved' });
+        const adminInventory = await Inventory.findOne({ itemName: inventoryItem.itemName, user: null });
+  
+        if (adminInventory && adminInventory.itemQuantity >= inventoryItem.itemQuantity) {
+          if (existingInventoryItem) {
+            existingInventoryItem.itemQuantity += parseInt(inventoryItem.itemQuantity, 10);
+            inventoryItem.requestStatus = 'discard';
+            await existingInventoryItem.save();
+            await removeApprovedRequest(requestId);
+          } else {
+            inventoryItem.requestStatus = 'approved';
+          }
+          adminInventory.itemQuantity -= parseInt(inventoryItem.itemQuantity, 10);
+          await adminInventory.save();
         } else {
-          inventoryItem.requestStatus = 'approved';
-          admininventory.itemQuantity -= parseInt(inventoryItem.itemQuantity, 10);
-          await admininventory.save();
+          return res.status(400).json({ message: 'Not enough items in the admin inventory' });
         }
       } else if (action === 'reject') {
         inventoryItem.requestStatus = 'rejected';
       } else {
         return res.status(400).json({ message: 'Invalid action' });
       }
-      
-     
+  
       await inventoryItem.save();
   
       res.status(200).json({ success: true, message: 'Inventory request updated successfully' });
@@ -347,8 +392,8 @@ router.put('/handlerequests/:requestId', async (req, res) => {
       res.status(500).json({ success: false, message: 'Internal Server Error' });
     }
   });
-  
 
+  
 // get all pending requests for admin
 router.get('/allpendingrequests', async (req, res) => {
     try {
