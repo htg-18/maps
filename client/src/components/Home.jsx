@@ -1,55 +1,27 @@
-
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
-import Navbar from './Navbar';
-import Footer from './Footer';
-import lnmiit from "../assets/lnmiit.jfif"
-import { Stack } from '@mui/material';
+import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
 
 const Home = () => {
   const navigate = useNavigate();
-
   return (
-    <div className='bg-zinc-300 '>
-    {/* <Navbar/> */}
-    <Stack
-  direction={{ xs: 'column', sm: 'row' }}
-  spacing={{ xs: 1, sm: 1, md: 2 }}
-  style={{display:'flex',alignItems: 'center',justifyContent: 'center',paddingBottom:'20px'}}
-
->
- <div className="flex flex-col h-screen  justify-center items-center mt-auto">
-        <h1 className='text-center text-teal-700 font-bold pb-10 text-[35px]'>LNMIIT INVENTORY</h1>
-        <button className="bg-teal-700 hover:bg-teal-900 text-white font-bold py-2 px-4 m-4 rounded" onClick={() => navigate('/adminlogin')}>Admin Login</button>
-        <button className="bg-teal-700 hover:bg-teal-900 text-white font-bold py-2 px-4 rounded" onClick={() => navigate('/userlogin')}>User Login</button>
-      </div>
-
-    <figure className="bg-slate-100 rounded-xl p-8 dark:bg-white w-[50%]">
-  <img className="w-50 h-25 rounded-[12px] mx-auto" src={lnmiit} alt="" width="384" height="512" />
-  {/* <div className="pt-6 text-center space-y-4">
-    <blockquote>
-      <p className="text-lg font-medium">
-      Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah 
-      </p>
-    </blockquote>
-    <figcaption className="font-medium">
-      <div className="text-teal-700 dark:text-teal-700">
-        Harsh Shah
-      </div>
-      <div className="text-slate-700 dark:text-slate-500">
-        Staff Engineer, Google
-      </div>
-    </figcaption>
-  </div> */}
-</figure>
-      {/* <div className=''>
-       
-      </div> */}
-     
-      </Stack>
-      {/* <Footer/> */}
+    <div className='bg-zinc-300 flex flex-col pt-[23px] max-w-full min-w-full min-h-screen ' >
       
-
+      <MapContainer
+        center={[22.9734, 78.6569]}
+        zoom={4}
+        style={{ height: '100vh', maxWidth: '100vw', zIndex: '1', marginTop: 0, top: '-20px' }}
+        maxBounds={[[6.5546079, 68.1113787], [35.6745457, 97.395561]]}
+      >
+        <div className="flex flex-col h-screen justify-center items-center mt-auto  absolute right-0 w-[30%] min-h-screen pl-3 pr-3" style={{ backgroundColor: 'rgba(40, 45, 55, 0.7)' , zIndex: '10000'}}>
+          <h1 className='text-center text-white pb-10 text-4xl'>StoreMap Reliance Retail
+        </h1>
+          <button className="hover:bg-orange-700 bg-orange-600 text-white top-[-1px] py-2 px-4 m-4 rounded text-xl" onClick={() => navigate('/adminlogin')}>Admin Login</button>
+      </div>
+        <TileLayer url="https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png" />
+      </MapContainer>
+      
     </div>
   )
 }

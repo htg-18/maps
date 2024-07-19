@@ -12,7 +12,7 @@ const IsLoginRouteProvider = ({ children }) => {
 
     if (isLoginRoute !== updatedIsLoginRoute) {
       setIsLoginRoute(updatedIsLoginRoute);
-      navigate(pathname, { replace: true }); // Use `replace: true` to avoid adding a new entry to the browser history
+      navigate(pathname, { replace: true });
     }
   }, [window.location.pathname]);
 

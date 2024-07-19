@@ -23,5 +23,4 @@ const AdminSchema = mongoose.Schema({
 })
 
 const Admin = mongoose.model('admin',AdminSchema);
-// User.createIndexes(); // stops entry of dublicate values
 module.exports = Admin;

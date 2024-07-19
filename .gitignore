@@ -1,2 +1,5 @@
 node_modules
 .env
+# india_district.json
+# india-states.json
+uploads
